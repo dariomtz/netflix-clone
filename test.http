@@ -1,11 +1,16 @@
 @host= http://localhost:3000/api
 
 ###
+GET {{ host }}/key
+
+###
 GET {{ host }}/users/1
+api-key: cpSd1frlA
 
 ###
 POST {{ host }}/users
 Content-Type: application/json
+api-key: cpSd1frlA
 
 {
     "name": "Dario",
@@ -19,6 +24,7 @@ Content-Type: application/json
 ###
 PUT {{ host }}/users/1
 Content-Type: application/json
+api-key: cpSd1frlA
 
 {
     "name": "Gustavo",
@@ -31,3 +37,4 @@ Content-Type: application/json
 
 ###
 DELETE {{ host }}/users/1
+api-key: cpSd1frlA

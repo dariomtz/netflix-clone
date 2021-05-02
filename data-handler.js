@@ -1,11 +1,13 @@
 "use-strict";
 
 const Joi = require('joi');
+const shortId = require('shortid');
 
 function dataHandler(){
     this.users = [];
     this.lastUserId = 0;
     this.movies = [];
+    this.apps = {};
 
     this.userSchema = Joi.object({
         name: Joi.string()
@@ -30,6 +32,25 @@ function dataHandler(){
                 .less('now')
                 .required(),
     });
+
+    this.generateAPIKey = () => {
+        let key = shortId.generate()
+        this.apps[key] = {
+            calls_per_day : 0,
+            transactions:[],
+        }
+        return key;
+    }
+
+    // TODO: Validate that the API Key does not have too many calls
+    this.validKey = (key) => {
+        return this.apps[key] !== undefined;
+    }
+
+    this.saveTransaction = (key, transaction) => {
+        this.apps[key].calls_per_day++;
+        this.apps[key].transactions.push(transaction);
+    }
 
     this.validateUser = (user) => {
         return this.userSchema.validate(user);
