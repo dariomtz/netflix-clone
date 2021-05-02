@@ -1,0 +1,33 @@
+@host= http://localhost:3000/api
+
+###
+GET {{ host }}/users/1
+
+###
+POST {{ host }}/users
+Content-Type: application/json
+
+{
+    "name": "Dario",
+    "last_name": "Martinez",
+    "email": "dario0@mail.com",
+    "password": "ANAbanana3000$",
+    "confirm_password": "ANAbanana3000$",
+    "birthday": "1999-09-04"
+}
+
+###
+PUT {{ host }}/users/1
+Content-Type: application/json
+
+{
+    "name": "Gustavo",
+    "last_name": "Martinez",
+    "email": "dario0@mail.com",
+    "password": "ANAbanana3000$",
+    "confirm_password": "ANAbanana3000$",
+    "birthday": "1999-09-04"
+}
+
+###
+DELETE {{ host }}/users/1
