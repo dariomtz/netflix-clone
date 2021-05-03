@@ -1,11 +1,22 @@
 @host= http://localhost:3000/api
 
 ###
-GET {{ host }}/users/1
+GET {{ host }}/key
+
+###
+POST {{ host }}/signin
+Content-Type: application/json
+api-key: g0wDvGPD5
+
+{
+    "email": "dario0@mail.com",
+    "password": "ANAbanana3000$"
+}
 
 ###
 POST {{ host }}/users
 Content-Type: application/json
+api-key: g0wDvGPD5
 
 {
     "name": "Dario",
@@ -17,13 +28,20 @@ Content-Type: application/json
 }
 
 ###
+GET {{ host }}/users/1
+api-key: g0wDvGPD5
+auth-token: BIYtIu691/1
+
+###
 PUT {{ host }}/users/1
 Content-Type: application/json
+api-key: g0wDvGPD5
+auth-token: BIYtIu691/1
 
 {
     "name": "Gustavo",
     "last_name": "Martinez",
-    "email": "dario0@mail.com",
+    "email": "dario1@mail.com",
     "password": "ANAbanana3000$",
     "confirm_password": "ANAbanana3000$",
     "birthday": "1999-09-04"
@@ -31,3 +49,5 @@ Content-Type: application/json
 
 ###
 DELETE {{ host }}/users/1
+api-key: g0wDvGPD5
+auth-token: BIYtIu691/1
