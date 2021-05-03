@@ -8,6 +8,7 @@ function dataHandler(){
     this.lastUserId = 0;
     this.movies = [];
     this.apps = {};
+    this.sessions = {}
 
     this.userSchema = Joi.object({
         name: Joi.string()
@@ -52,6 +53,26 @@ function dataHandler(){
         this.apps[key].transactions.push(transaction);
     }
 
+    this.signin = (signin) => {
+        let user = this.getUserByEmail(signin.email);
+        if (!user) return null;
+        if (user.password !== signin.password) return null;
+
+        return user.id;
+    }
+
+    this.createSession = (userId) => {
+        let session = `${ shortId.generate() }/${ userId }`;
+        this.sessions[session] = {
+            created: Date.now(),
+        };
+        return session;
+    }
+
+    this.validSession = (session) => {
+        return this.sessions[session] !== undefined;
+    }
+
     this.validateUser = (user) => {
         return this.userSchema.validate(user);
     }
@@ -60,7 +81,13 @@ function dataHandler(){
         return this.users.find(user => user.id == id);
     }
 
+    this.getUserByEmail = (email) => {
+        return this.users.find(u => u.email == email);
+    }
+
     this.postUser = (user) => {
+        let u = this.getUserByEmail(user.email);
+        if(u) return null;
         user.id = ++this.lastUserId;
         delete user.confirm_password;
         this.users.push(user);
@@ -70,6 +97,7 @@ function dataHandler(){
     this.putUser = (id, user) => {
         const index = this.users.findIndex(user => user.id == id);
         user.id = id;
+        user.email = this.users[index].email;
         delete user.confirm_password;
         this.users[index] = user;
         return user;

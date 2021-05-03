@@ -4,13 +4,23 @@
 GET {{ host }}/key
 
 ###
+POST {{ host }}/signin
+Content-Type: application/json
+api-key: a2IyL0wy_
+
+{
+    "email": "dario0@mail.com",
+    "password": "ANAbanana3000$"
+}
+
+###
 GET {{ host }}/users/1
-api-key: cpSd1frlA
+api-key: a2IyL0wy_
 
 ###
 POST {{ host }}/users
 Content-Type: application/json
-api-key: cpSd1frlA
+api-key: a2IyL0wy_
 
 {
     "name": "Dario",
@@ -24,7 +34,7 @@ api-key: cpSd1frlA
 ###
 PUT {{ host }}/users/1
 Content-Type: application/json
-api-key: cpSd1frlA
+api-key: DdOVfsEUu
 
 {
     "name": "Gustavo",
@@ -37,4 +47,4 @@ api-key: cpSd1frlA
 
 ###
 DELETE {{ host }}/users/1
-api-key: cpSd1frlA
+api-key: DdOVfsEUu

@@ -35,12 +35,49 @@ function middlewareAPI(req, res, next){
     next();
 }
 
-app.use('/api/users', middlewareAPI);
+app.use('/api/signin', middlewareAPI);
+app.post('/api/signin', (req, res)=>{
+    let userId = dh.signin(req.body);
 
-//TODO: Delete this method after testing
-app.get('/api/users', (req, res) => {
-    res.send(dh.users);
+    if(!userId){
+        res.status(400);
+        res.send('Bad singin information. Check email and password.');
+        return;
+    }
+
+    res.send({
+        token: dh.createSession(userId),
+    });
 });
+
+function middlewareAuthentication(req, res, next){
+    let session = req.header('auth-token');
+    if(!dh.validSession(session)){
+        res.status(403);
+        res.send('User not authenticated.');
+        return;
+    }
+
+    req.userId = session.split('/').pop();
+
+    next();
+}
+
+function middlewareAuthorization(req, res, next){
+    if(req.params.id != req.userId){
+        res.status(403);
+        res.send('User not authorized for this opperation.');
+        return;
+    }
+
+    next();
+}
+
+app.use('/api/users/:id', middlewareAPI);
+app.use('/api/users/:id', middlewareAuthentication);
+app.use('/api/users/:id', middlewareAuthorization);
+
+app.use('/api/users', middlewareAPI);
 
 app.post('/api/users', (req, res) => {
     const result = dh.validateUser(req.body);
@@ -51,6 +88,12 @@ app.post('/api/users', (req, res) => {
     }
 
     const user = dh.postUser(req.body);
+
+    if (!user){
+        res.status(400).send('Email already in use for another account.');
+        return;
+    }
+
     res.status(201).send(user);
 });
 
