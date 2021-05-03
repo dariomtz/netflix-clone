@@ -6,7 +6,7 @@ GET {{ host }}/key
 ###
 POST {{ host }}/signin
 Content-Type: application/json
-api-key: a2IyL0wy_
+api-key: g0wDvGPD5
 
 {
     "email": "dario0@mail.com",
@@ -14,13 +14,9 @@ api-key: a2IyL0wy_
 }
 
 ###
-GET {{ host }}/users/1
-api-key: a2IyL0wy_
-
-###
 POST {{ host }}/users
 Content-Type: application/json
-api-key: a2IyL0wy_
+api-key: g0wDvGPD5
 
 {
     "name": "Dario",
@@ -32,14 +28,20 @@ api-key: a2IyL0wy_
 }
 
 ###
+GET {{ host }}/users/1
+api-key: g0wDvGPD5
+auth-token: BIYtIu691/1
+
+###
 PUT {{ host }}/users/1
 Content-Type: application/json
-api-key: DdOVfsEUu
+api-key: g0wDvGPD5
+auth-token: BIYtIu691/1
 
 {
     "name": "Gustavo",
     "last_name": "Martinez",
-    "email": "dario0@mail.com",
+    "email": "dario1@mail.com",
     "password": "ANAbanana3000$",
     "confirm_password": "ANAbanana3000$",
     "birthday": "1999-09-04"
@@ -47,4 +49,5 @@ api-key: DdOVfsEUu
 
 ###
 DELETE {{ host }}/users/1
-api-key: DdOVfsEUu
+api-key: g0wDvGPD5
+auth-token: BIYtIu691/1
