@@ -10,7 +10,7 @@ app.use(express.static('public'));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.sendFile('index.html');
+    res.sendFile(__dirname + '/public/landing.html');
 });
 
 app.get('/api/key', (req, res) => {
