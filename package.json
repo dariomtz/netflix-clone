@@ -4,7 +4,7 @@
   "description": "A website that looks like netflix but it is not",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
