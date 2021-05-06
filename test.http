@@ -6,7 +6,7 @@ GET {{ host }}/key
 ###
 POST {{ host }}/signin
 Content-Type: application/json
-api-key: g0wDvGPD5
+api-key: 25ngTZeBT
 
 {
     "email": "dario0@mail.com",
@@ -16,7 +16,7 @@ api-key: g0wDvGPD5
 ###
 POST {{ host }}/users
 Content-Type: application/json
-api-key: g0wDvGPD5
+api-key: 25ngTZeBT
 
 {
     "name": "Dario",
@@ -51,3 +51,41 @@ auth-token: BIYtIu691/1
 DELETE {{ host }}/users/1
 api-key: g0wDvGPD5
 auth-token: BIYtIu691/1
+
+###
+POST {{ host }}/movies
+Content-Type: application/json
+api-key: 25ngTZeBT
+auth-token: MB36FpFvy/1
+
+{
+	"title": "Peli cool",
+	"description": "ES una peli chida bien chida",
+	"image": "https://expressjs.com/en/guide/using-middleware.html",
+	"trailer": "https://expressjs.com/en/guide/using-middleware.html",
+	"thumbnail": "https://expressjs.com/en/guide/using-middleware.html"
+}
+
+###
+PUT {{ host }}/movies/1
+Content-Type: application/json
+api-key: 25ngTZeBT
+auth-token: MB36FpFvy/1
+
+{
+	"title": "Peli chida",
+	"description": "ES una peli chida bien chida",
+	"image": "https://expressjs.com/en/guide/using-middleware.html",
+	"trailer": "https://expressjs.com/en/guide/using-middleware.html",
+	"thumbnail": "https://expressjs.com/en/guide/using-middleware.html"
+}
+
+###
+DELETE {{ host }}/movies/1
+api-key: 25ngTZeBT
+auth-token: MB36FpFvy/1
+
+###
+GET {{ host }}/movies
+api-key: 25ngTZeBT
+auth-token: MB36FpFvy/1
