@@ -1,0 +1,242 @@
+@import url(https://fonts.googleapis.com/css?family=Fira+Sans:200,400,500,600,700|Plaster);
+body {
+  margin: 0;
+  color: #E5DADA;
+  overflow-x: hidden;
+  font-family: "Fira Sans", sans-serif;
+  background-color: black;
+}
+body::-webkit-scrollbar {
+  width: 8px;
+}
+body::-webkit-scrollbar-track {
+  background: black;
+}
+body::-webkit-scrollbar-thumb {
+  background: #454545;
+  border-radius: 3px;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background: grey;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, p {
+  cursor: default;
+}
+
+.video-page {
+  width: 100%;
+  margin: auto;
+  min-height: 100vh;
+  margin-bottom: 50px;
+}
+.video-page .video-page-header {
+  width: 100%;
+  min-height: 600px;
+  position: relative;
+  background: linear-gradient(0deg, black 0%, black 0%, rgba(0, 0, 0, 0.7) 100%);
+  display: flex;
+}
+.video-page .video-page-header:before {
+  content: "";
+  background: url(https://occ-0-1068-92.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABcWJoV6_VjyVCkaNPBm_l-Kc1Zwb56lWtGaL1r6Lf7s2wbm8uEAXa2xrXUtx71wcWQ4c6X2siMyzGSSM2EJs483iuecz.jpg);
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  height: 98%;
+  filter: blur(8px);
+  width: 100%;
+  z-index: -1;
+}
+.video-page .video-page-header .video-description {
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  display: flex;
+}
+.video-page .video-page-header .video-description .header-left {
+  width: 40%;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+.video-page .video-page-header .video-description .header-left img {
+  border-radius: 0.25rem;
+  height: 350px;
+  width: 250px;
+  object-fit: cover;
+}
+.video-page .video-page-header .video-description .header-left .my-list {
+  border-radius: 0.25rem;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.5s;
+  border: 2px solid #E5DADA;
+  margin-top: 20px;
+  text-transform: uppercase;
+  width: 120px;
+}
+.video-page .video-page-header .video-description .header-left .my-list:hover {
+  background-color: #E59500;
+}
+.video-page .video-page-header .video-description .header-left .my-list i {
+  margin-right: 10px;
+}
+.video-page .video-page-header .video-description .header-right {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.video-page .video-page-header .video-description .header-right h1 {
+  margin-bottom: 0;
+}
+.video-page .video-page-header .video-description .header-right h2 {
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+}
+.video-page .video-page-header .video-description .header-right h2 span {
+  margin-left: 10px;
+  color: #454545;
+  font-weight: bold;
+}
+.video-page .video-page-header .video-description .header-right p {
+  color: #888888;
+}
+.video-page .video-page-header .video-description .header-right .info {
+  display: flex;
+  align-items: flex-end;
+  color: #454545;
+}
+.video-page .video-page-header .video-description .header-right .info h4, .video-page .video-page-header .video-description .header-right .info h5 {
+  margin: 0;
+  font-size: 18px;
+}
+.video-page .video-page-header .video-description .header-right .info h5 {
+  font-weight: normal;
+  margin-left: 10px;
+}
+.video-page .video-page-header .video-description .header-right .rating {
+  width: 69px;
+  border-radius: 0.25rem;
+  margin-bottom: 20px;
+  padding: 5px 10px;
+  background-color: rgba(224, 19, 19, 0.8);
+}
+.video-page .streaming-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto 40px auto;
+  position: relative;
+}
+.video-page .streaming-container img {
+  width: 100%;
+}
+.video-page .streaming-container:after {
+  content: "";
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.video-page .streaming-container .streaming-play {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 70px;
+  z-index: 2;
+  color: #454545;
+}
+.video-page .streaming-container .streaming-play i {
+  cursor: pointer;
+  transition: all 0.5s;
+}
+.video-page .streaming-container .streaming-play i:hover {
+  color: #E5DADA;
+}
+.video-page .comments-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  border-top: 2px solid #454545;
+}
+.video-page .comments-container h1 {
+  font-size: 25px;
+  margin-bottom: 30px;
+  color: #454545;
+  font-weight: normal;
+}
+.video-page .comments-container .profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 0.25rem;
+  object-fit: cover;
+}
+.video-page .comments-container .one-comment {
+  display: flex;
+  margin-bottom: 20px;
+}
+.video-page .comments-container .one-comment .comment-content {
+  margin-left: 10px;
+  padding-top: 5px;
+}
+.video-page .comments-container .one-comment .comment-content h4 {
+  margin: 0;
+}
+.video-page .comments-container .one-comment .comment-content h4 span {
+  color: #454545;
+  margin-left: 10px;
+}
+.video-page .comments-container .one-comment .comment-content p {
+  margin: 0;
+  margin-top: 10px;
+  color: #888888;
+}
+.video-page .comments-container .add-comment {
+  display: flex;
+}
+.video-page .comments-container .add-comment .submit-comment {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.video-page .comments-container .add-comment .submit-comment input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #454545;
+  font-family: "Fira Sans", sans-serif;
+  font-size: 15px;
+  color: #E5DADA;
+  padding: 5px 0;
+  transition: all 0.5s;
+}
+.video-page .comments-container .add-comment .submit-comment input:focus {
+  border-bottom: 1px solid #E5DADA;
+  outline: none;
+}
+.video-page .comments-container .add-comment .submit-comment .submit {
+  font-size: 15px;
+  padding: 5px 10px;
+  border-radius: 0.25rem;
+  align-self: flex-end;
+  cursor: pointer;
+  color: #888888;
+  transition: all 0.5s;
+}
+.video-page .comments-container .add-comment .submit-comment .submit:hover {
+  color: #E59500;
+}
