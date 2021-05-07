@@ -1,7 +1,7 @@
 "use strict";
 
 const express = require('express');
-const dh = require('./data-handler');
+const dh = require('./moviesHandler');
 const usersRouter = require('./users');
 const pagesRouter = require('./pages');
 const moviesRouter = require('./movies');

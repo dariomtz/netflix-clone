@@ -1,7 +1,7 @@
 "use strict";
 
 const express = require('express');
-const dh = require('./data-handler');
+const dh = require('./moviesHandler');
 const app = express.Router();
 
 app.get('/', (req, res) => {
