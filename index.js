@@ -3,6 +3,7 @@
 const express = require('express');
 const dh = require('./data-handler');
 const usersRouter = require('./users');
+const moviesRouter = require('./movies');
 
 const app = express();
 
@@ -10,7 +11,7 @@ app.use(express.static('public'));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.sendFile('index.html');
+    res.sendFile(__dirname + '/public/landing.html');
 });
 
 app.get('/api/key', (req, res) => {
@@ -78,6 +79,12 @@ app.use('/api/users/:id', middlewareAPI);
 app.use('/api/users/:id', middlewareAuthentication);
 app.use('/api/users/:id', middlewareAuthorization);
 app.use('/api/users', usersRouter);
+
+app.use('/api/movies', middlewareAPI);
+app.use('/api/movies', middlewareAuthentication);
+app.use('/api/movies/:id', middlewareAPI);
+app.use('/api/movies/:id', middlewareAuthentication);
+app.use('/api/movies', moviesRouter);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`App listening on port ${port}!`));

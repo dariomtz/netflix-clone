@@ -6,6 +6,7 @@ const shortId = require('shortid');
 function dataHandler(){
     this.users = [];
     this.lastUserId = 0;
+    this.lastMovieId = 0;
     this.movies = [];
     this.apps = {};
     this.sessions = {}
@@ -31,6 +32,22 @@ function dataHandler(){
         birthday: Joi.date()
                 .iso()
                 .less('now')
+                .required(),
+    });
+
+    this.movieSchema = Joi.object({
+        title: Joi.string()
+                .required(),
+        description: Joi.string()
+                .required(),
+        image: Joi.string()
+                .uri()
+                .required(),
+        trailer: Joi.string()
+                .uri()
+                .required(),
+        thumbnail: Joi.string()
+                .uri()
                 .required(),
     });
 
@@ -106,6 +123,41 @@ function dataHandler(){
     this.deleteUser = (id) => {
         const index = this.users.findIndex(user => user.id == id);
         this.users.splice(index, 1);
+    }
+
+    this.validateMovie = (movie) => {
+        return this.movieSchema.validate(movie);
+    }
+
+    this.getMovies = () => {
+        return this.movies.map((value)=>{
+            return {
+                thumbnail: value.thumbnail,
+                id: value.id
+            }
+        });
+    }
+
+    this.getMovie = (id) => {
+        return this.movies.find(movie => id == movie.id);
+    }
+
+    this.postMovie = (movie) => {
+        movie.id = ++this.lastMovieId;
+        this.movies.push(movie);
+        return movie;
+    }
+
+    this.putMovie = (id, movie) => {
+        const index = this.movies.findIndex(movies => movies.id == id);
+        movie.id = id;
+        this.movies[index] = movie;
+        return movie;
+    }
+
+    this.deleteMovie = (id) => {
+        const index = this.movies.findIndex(movie => movie.id == id);
+        this.movies.splice(index, 1);
     }
 }
 
