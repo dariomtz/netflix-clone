@@ -2,7 +2,7 @@ const express = require('express');
 const app = express.Router();
 
 app.get('/', (req, res) => {
-	res.sendFile(__dirname + '/public/landing.html');
+	res.sendFile(__dirname + '/public/index.html');
 });
 app.get('/signin', (req, res) => {
 	res.sendFile(__dirname + '/public/signin.html');
