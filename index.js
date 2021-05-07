@@ -3,6 +3,7 @@
 const express = require('express');
 const dh = require('./data-handler');
 const usersRouter = require('./users');
+const pagesRouter = require('./pages');
 const moviesRouter = require('./movies');
 
 const app = express();
@@ -10,9 +11,7 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/landing.html');
-});
+app.use(pagesRouter);
 
 app.get('/api/key', (req, res) => {
     res.send({
