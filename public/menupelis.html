@@ -1,58 +1,115 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Menú de películas</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/apple/155/overheated-face_1f975.png">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+<link rel="stylesheet" href="menupelis.css">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Netflix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
+  <script src="menupelis.js"></script>
+  <script src="data-handler.js"></script>
 
 </head>
-  <body>
-      <!-- Barra navegación -->
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
-        <img class="nav-link p-1 mr-3" style="width: 160px;" src="https://pngimg.com/uploads/netflix/netflix_PNG11.png" alt="hotwheels">
-  
-        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> 
-          <span class="navbar-toggler-icon"></span>
-        </button>
-  
-        <div class="collapse navbar-collapse" id="collapsibleNavId">
-          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="landing.html">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="signup.html" >Sign up</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="signin.html" >Sign in</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="menupelis.html">Menu peliculas</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="detallepelis.html">Detalles pelicula</a>
-            </li>
-              <li class="nav-item">
-                <a class="nav-link" href="creadores.html" >Creadores</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    <h1>Menú de películas</h1>
-    <p>Pantalla donde se ve una película destacada y debajo uno o más carruseles de películas.</p>
+<body>
+  <div class="wrapper">
 
+    <!-- HEADER -->
+  <header>
+    <div class="netflixLogo">
+      <a id="logo" href="#home"><img
+          src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/logo.PNG?raw=true" alt="Logo Image"></a>
+    </div>
+    <nav class="main-nav">
+      <a href="#home">Home</a>
+      <a href="signup.html">Sign up</a>
+      <a href="signin.html">Sign in</a>
+      <a href="menupelis.html">Menu Peliculas</a>
+      <a href="detallepelis.html">Detalles pelicula</a>
+      <a href="creadores.html">Creadores</a>
+    </nav>
+  </header>
+  <!-- END OF HEADER -->
+    
+    <!-- MAIN CONTAINER -->
+    <section class="main-container" >
+      <div class="location" id="home">
+          <h1 id="home">Popular on Netflix</h1>
+          <div class="box">
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt=""></a>
+            <a href="detallepelis.html"><img src="https://img.nbc.com/sites/nbcunbc/files/images/2021/2/11/NewAmsterdam_S3-Logo-1920x1080.jpg" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p3.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p4.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p5.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p6.PNG?raw=true" alt=""></a>
+    
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p7.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p8.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p9.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p10.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p11.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p12.PNG?raw=true" alt=""></a>        
+          </div>
+      </div>
+      
 
+      <h1 id="myList">Trending Now</h1>
+      <div class="box">
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/t1.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/t2.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/t3.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/t4.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/t5.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/t6.PNG?raw=true" alt=""></a>                  
+      </div>
+      
+      <h1 id="tvShows">TV Shows</h1>
+      <div class="box">
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv1.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv2.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv3.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv4.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv5.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv6.PNG?raw=true" alt=""></a>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv7.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv8.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv9.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv10.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv11.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv12.PNG?raw=true" alt=""></a>              
+      </div>
+      
+
+      <h1 id="movies">Blockbuster Action & Adventure</h1>
+      <div class="box">
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/m1.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/m2.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/m3.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/m4.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/m5.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/m6.PNG?raw=true" alt=""></a>                
+      </div>
+
+      <h1 id="originals">Netflix Originals</h1>
+      <div class="box">
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/o1.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/o2.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/o3.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/o4.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/o5.PNG?raw=true" alt=""></a>
+        <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/o6.PNG?raw=true" alt=""></a>                
+      </div>
+     
+    <!-- END OF MAIN CONTAINER -->
+
+    
+
+    <!-- FOOTER -->
+    <footer>
+      <p>DASW</p>
+      <p>Equipo alfa maravilla 2021</p>
+    </footer>
+  </div>
+</body>
 </html>
