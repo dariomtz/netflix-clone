@@ -2,16 +2,24 @@
 
 const e = React.createElement;
 
-class LikeButton extends React.Component {
+class CreatorsApp extends React.Component {
   render() {
     return (
-        <div>
-            <h1>Pantalla de creadores</h1>
-            <p>Pantalla donde se puedan añadir, editar y borrar películas que aparecerán en el menú de películas.</p>
+        <div className="container-fluid bg-danger text-white p-4">
+            <div className="d-flex justify-content-between">
+                <h1>Movies</h1>
+                <div className="p-2">
+                    <button className="btn btn-light text-danger">
+                        <PlusSign/>
+                        Add movie.
+                    </button>
+                </div>
+            </div>
+            <MovieList />
         </div>   
     );
   }
 }
 
 const domContainer = document.getElementById('creators-container');
-ReactDOM.render(e(LikeButton), domContainer);
+ReactDOM.render(e(CreatorsApp), domContainer);

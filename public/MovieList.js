@@ -8,49 +8,52 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var e = React.createElement;
+var MovieList = function (_React$Component) {
+    _inherits(MovieList, _React$Component);
 
-var CreatorsApp = function (_React$Component) {
-    _inherits(CreatorsApp, _React$Component);
+    function MovieList(props) {
+        _classCallCheck(this, MovieList);
 
-    function CreatorsApp() {
-        _classCallCheck(this, CreatorsApp);
+        var _this = _possibleConstructorReturn(this, (MovieList.__proto__ || Object.getPrototypeOf(MovieList)).call(this, props));
 
-        return _possibleConstructorReturn(this, (CreatorsApp.__proto__ || Object.getPrototypeOf(CreatorsApp)).apply(this, arguments));
+        _this.state = {
+            movies: []
+        };
+        return _this;
     }
 
-    _createClass(CreatorsApp, [{
+    _createClass(MovieList, [{
+        key: "fetchMovies",
+        value: function fetchMovies() {
+            return [{
+                "id": "1",
+                "title": "Peli chida",
+                "description": "ES una peli chida bien chida",
+                "image": "https://expressjs.com/en/guide/using-middleware.html",
+                "trailer": "https://expressjs.com/en/guide/using-middleware.html",
+                "thumbnail": "https://expressjs.com/en/guide/using-middleware.html"
+            }];
+        }
+    }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var movies = this.fetchMovies();
+            this.setState({
+                movies: movies
+            });
+        }
+    }, {
         key: "render",
         value: function render() {
             return React.createElement(
                 "div",
-                { className: "container-fluid bg-danger text-white p-4" },
-                React.createElement(
-                    "div",
-                    { className: "d-flex justify-content-between" },
-                    React.createElement(
-                        "h1",
-                        null,
-                        "Movies"
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "p-2" },
-                        React.createElement(
-                            "button",
-                            { className: "btn btn-light text-danger" },
-                            React.createElement(PlusSign, null),
-                            "Add movie."
-                        )
-                    )
-                ),
-                React.createElement(MovieList, null)
+                null,
+                this.state.movies.map(function (movie) {
+                    return React.createElement(MovieInfo, { key: movie.id, movie: movie });
+                })
             );
         }
     }]);
 
-    return CreatorsApp;
+    return MovieList;
 }(React.Component);
-
-var domContainer = document.getElementById('creators-container');
-ReactDOM.render(e(CreatorsApp), domContainer);
