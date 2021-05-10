@@ -1,12 +1,6 @@
 "use strict";
 
 class ModalAddMovie extends React.Component {
-    addMovie(){
-        return new Promise((resolve) => {
-            
-        });
-    }
-
     render(){
         return (
             <div className="modal fade" id="addMovie" tabindex="-1" aria-hidden="true">

@@ -18,11 +18,6 @@ var ModalAddMovie = function (_React$Component) {
     }
 
     _createClass(ModalAddMovie, [{
-        key: "addMovie",
-        value: function addMovie() {
-            return new Promise(function (resolve) {});
-        }
-    }, {
         key: "render",
         value: function render() {
             return React.createElement(
