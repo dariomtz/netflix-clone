@@ -25,21 +25,26 @@ var MovieList = function (_React$Component) {
     _createClass(MovieList, [{
         key: "fetchMovies",
         value: function fetchMovies() {
-            return [{
-                "id": "1",
-                "title": "Peli chida",
-                "description": "ES una peli chida bien chida",
-                "image": "https://expressjs.com/en/guide/using-middleware.html",
-                "trailer": "https://expressjs.com/en/guide/using-middleware.html",
-                "thumbnail": "https://expressjs.com/en/guide/using-middleware.html"
-            }];
+            return new Promise(function (resolve) {
+                resolve([{
+                    "id": "1",
+                    "title": "Peli chida",
+                    "description": "ES una peli chida bien chida",
+                    "image": "https://expressjs.com/en/guide/using-middleware.html",
+                    "trailer": "https://expressjs.com/en/guide/using-middleware.html",
+                    "thumbnail": "https://expressjs.com/en/guide/using-middleware.html"
+                }]);
+            });
         }
     }, {
         key: "componentDidMount",
         value: function componentDidMount() {
-            var movies = this.fetchMovies();
-            this.setState({
-                movies: movies
+            var _this2 = this;
+
+            this.fetchMovies().then(function (movies) {
+                _this2.setState({
+                    movies: movies
+                });
             });
         }
     }, {

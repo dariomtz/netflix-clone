@@ -5,16 +5,17 @@ const e = React.createElement;
 class CreatorsApp extends React.Component {
   render() {
     return (
-        <div className="container-fluid bg-danger text-white p-4">
+        <div className="container-fluid bg-danger p-4">
             <div className="d-flex justify-content-between">
-                <h1>Movies</h1>
+                <h1 className="text-white">Movies</h1>
                 <div className="p-2">
-                    <button className="btn btn-light text-danger">
+                    <button className="btn btn-light text-danger" data-toggle="modal" data-target="#addMovie">
                         <PlusSign/>
-                        Add movie.
+                        Add movie
                     </button>
                 </div>
             </div>
+            <ModalAddMovie/>
             <MovieList />
         </div>   
     );

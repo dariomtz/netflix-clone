@@ -9,23 +9,26 @@ class MovieList extends React.Component {
     }
 
     fetchMovies(){
-        return [
-            {
-                "id": "1",
-                "title": "Peli chida",
-                "description": "ES una peli chida bien chida",
-                "image": "https://expressjs.com/en/guide/using-middleware.html",
-                "trailer": "https://expressjs.com/en/guide/using-middleware.html",
-                "thumbnail": "https://expressjs.com/en/guide/using-middleware.html",
-            }
-        ]
+        return new Promise((resolve) => {
+            resolve([
+                {
+                    "id": "1",
+                    "title": "Peli chida",
+                    "description": "ES una peli chida bien chida",
+                    "image": "https://expressjs.com/en/guide/using-middleware.html",
+                    "trailer": "https://expressjs.com/en/guide/using-middleware.html",
+                    "thumbnail": "https://expressjs.com/en/guide/using-middleware.html",
+                }
+            ]);
+        });
     }
 
     componentDidMount(){
-        let movies = this.fetchMovies();
-        this.setState({
-            movies: movies,
-        });
+        this.fetchMovies().then(movies => {
+            this.setState({
+                movies: movies,
+            });
+        });   
     }
 
     render(){
