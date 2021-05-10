@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+  <title>Netflix</title>
+  <link rel="stylesheet" href="landing.css">
 </head>
+
 <body>
-	<h1>Test</h1>
-	<a href="/signin">Inicia sesion</a>
-	<a href="/detallepelis">Detalle pelis</a>
+  <div class="background-wrapper">
+    <img class="background"
+      src="https://assets.nflxext.com/ffe/siteui/vlv3/5039d301-b891-47b2-b755-553e5c874395/e792888a-2c70-4a78-9dfd-b8a26e767ae4/BR-en-20200210-popsignuptwoweeks-perspective_alpha_website_small.jpg"
+      srcset="https://assets.nflxext.com/ffe/siteui/vlv3/5039d301-b891-47b2-b755-553e5c874395/e792888a-2c70-4a78-9dfd-b8a26e767ae4/BR-en-20200210-popsignuptwoweeks-perspective_alpha_website_small.jpg 1000w, https://assets.nflxext.com/ffe/siteui/vlv3/5039d301-b891-47b2-b755-553e5c874395/e792888a-2c70-4a78-9dfd-b8a26e767ae4/BR-en-20200210-popsignuptwoweeks-perspective_alpha_website_medium.jpg 1500w, https://assets.nflxext.com/ffe/siteui/vlv3/5039d301-b891-47b2-b755-553e5c874395/e792888a-2c70-4a78-9dfd-b8a26e767ae4/BR-en-20200210-popsignuptwoweeks-perspective_alpha_website_large.jpg 1800w"
+      alt>
+  </div>
+  <div id="app">
+    <div id="header">
+      <a href="/">
+        <img id="logo" src="https://logodownload.org/wp-content/uploads/2014/10/netflix-logo-5.png">
+      </a>
+    </div>
+    <div id="container">
+      <form id="log-in-form" action="" method="POST">
+        <div class="label-container">
+          <h2 id="sign-in-text">Wellcome</h1>
+        </div>
+
+				<div class="text-container">
+					<p>Netflix no nos demandes porfas :)</p>
+					<p>A website that looks like Netflix but it's not.</p>
+				</div>
+
+				<div class="buttons-container">
+					<div class="box-container landing-button">
+						<input id="signin-button" type="button" value="Signin" onclick="location.href = '/signin'">
+					</div>
+					<div class="box-container">
+						<input id="signup-button" type="button" value="Signup" onclick="location.href = '/signup'">
+					</div>
+				</div>
+    </div>
 </body>
 </html>
