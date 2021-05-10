@@ -205,6 +205,13 @@ input#remember-me:focus {
     color: white;
     transition: font-size 100ms ease, top 100ms ease, opacity 100ms ease;
 }
+input[type="email"], input[type="password"]{
+    cursor: text;
+    user-select: none;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
 .fb-login-form {
     position: relative;
     width: 100%;
