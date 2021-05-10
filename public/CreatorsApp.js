@@ -24,13 +24,13 @@ var CreatorsApp = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 "div",
-                { className: "container-fluid bg-danger text-white p-4" },
+                { className: "container-fluid bg-danger p-4" },
                 React.createElement(
                     "div",
                     { className: "d-flex justify-content-between" },
                     React.createElement(
                         "h1",
-                        null,
+                        { className: "text-white" },
                         "Movies"
                     ),
                     React.createElement(
@@ -38,12 +38,13 @@ var CreatorsApp = function (_React$Component) {
                         { className: "p-2" },
                         React.createElement(
                             "button",
-                            { className: "btn btn-light text-danger" },
+                            { className: "btn btn-light text-danger", "data-toggle": "modal", "data-target": "#addMovie" },
                             React.createElement(PlusSign, null),
-                            "Add movie."
+                            "Add movie"
                         )
                     )
                 ),
+                React.createElement(ModalAddMovie, null),
                 React.createElement(MovieList, null)
             );
         }
