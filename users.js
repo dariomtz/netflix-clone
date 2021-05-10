@@ -1,17 +1,21 @@
 "use strict";
 
 const express = require('express');
-const dh = require('./data-handler.js');
+const dh = require('./usersHandler');
+const middleware = require('./middleware');
 const app = express.Router();
 
+//middleware
+app.use(middleware.API);
+
+app.use('/:id', middleware.authentication);
+app.use('/:id', middleware.authorization);
+app.use('/:id', middleware.userExists);
+
+app.post('/').put('/:id').use(middleware.validateUser);
+
+//endpoints
 app.post('/', (req, res) => {
-    const result = dh.validateUser(req.body);
-
-    if(result.error){
-        res.status(400).send(result.error.details[0].message);
-        return;
-    }
-
     const user = dh.postUser(req.body);
 
     if (!user){
@@ -23,27 +27,15 @@ app.post('/', (req, res) => {
 });
 
 app.get('/:id', (req, res) => {
-    const user = dh.getUser(req.params.id);
-    if(!user) res.status(404).send('The user with this id does not exist.');
-    
-    res.send(user);
+    res.send(req.user);
 });
 
 app.put('/:id', (req, res) => {
-    let user = dh.getUser(req.params.id);
-    if(!user) res.status(404).send('The user with this id does not exist.');
-
-    const result = dh.validateUser(req.body);
-    if(result.error) res.status(400).send(result.error.details[0].message);
-
-    user = dh.putUser(req.params.id, req.body);
+    const user = dh.putUser(req.params.id, req.body);
     res.send(user);
 });
 
 app.delete('/:id', (req, res) => {
-    let user = dh.getUser(req.params.id);
-    if(!user) res.status(404).send('The user with this id does not exist.');
-
     dh.deleteUser(req.params.id);
     res.status(204).send();
 });
