@@ -1,12 +1,15 @@
 "use-strict";
 
 const Joi = require('joi');
+const { MongoClient } = require('mongodb');
 const shortId = require('shortid');
+
+//Temporal URI, when deploy change to deploy database and credentials
+const uri = 'mongodb+srv://gus-production:QtQX4awd0QYt9Lba@production.zwp4w.mongodb.net/netflix-clone?retryWrites=true&w=majority';
 
 function usersHandler(){
     this.users = [];
     this.lastUserId = 0;
-    this.apps = {};
     this.sessions = {};
 
     this.userSchema = Joi.object({
@@ -34,22 +37,47 @@ function usersHandler(){
     });
 
     this.generateAPIKey = () => {
-        let key = shortId.generate()
-        this.apps[key] = {
-            calls_per_day : 0,
-            transactions:[],
-        }
-        return key;
+        let newKey = shortId.generate();
+        let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+        client.connect().then(()=>{
+            client.db('netflix-clone').collection('API').findOne({key:newKey}).then(key=>{
+                if(key === null){
+                    client.db('netflix-clone').collection('API').insertOne({
+                        key: newKey,
+                        calls_per_day:0,
+                        transactions: []
+                    }).then((jalo)=>{
+                        client.close();
+                    });
+                }
+            });
+        });
+        return newKey;
+    };
+
+    this.validKey = async (searchKey) => {
+        let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+        await client.connect();
+        let key = await client.db('netflix-clone').collection('API').findOne({key:searchKey});
+        return key !== null;
     }
 
-    // TODO: Validate that the API Key does not have too many calls
-    this.validKey = (key) => {
-        return this.apps[key] !== undefined;
-    }
-
-    this.saveTransaction = (key, transaction) => {
-        this.apps[key].calls_per_day++;
-        this.apps[key].transactions.push(transaction);
+    this.saveTransaction = (searchKey, transaction) => {
+        let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+        client.connect().then(()=>{
+            client.db('netflix-clone').collection('API').findOne({key:searchKey}).then(key=>{               
+                if(key === null) return;
+                console.log(key);
+                key.transactions.push(transaction);
+                client.db('netflix-clone').collection('API').updateOne(
+                    {key:searchKey},
+                    {$set: {
+                        calls_per_day:key.calls_per_day+1,
+                        transactions:key.transactions
+                    }}
+                );
+            });
+        });
     }
 
     this.signin = (signin) => {

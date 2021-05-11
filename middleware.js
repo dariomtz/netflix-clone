@@ -4,15 +4,15 @@ const usersDH = require('./usersHandler');
 const moviesDH = require('./moviesHandler');
 
 function middleware(){
-    this.API = (req, res, next) => {
+    this.API = async (req, res, next) => {
         let key = req.header('api-key');
-        if(!usersDH.validKey(key)){
+        if(await !usersDH.validKey(key)){
             res.status(401);
             res.send('Invalid or missing api-key');
             return;
         }
     
-        usersDH.saveTransaction(key, {
+        await usersDH.saveTransaction(key, {
             method: req.method,
             endpoint: req.path,
         });
