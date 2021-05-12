@@ -5,7 +5,10 @@ class MovieList extends React.Component {
         super(props);
         this.state = {
             movies: [],
-        }
+        };
+
+        this.addMovie = this.addMovie.bind(this);
+        this.editMovie = this.editMovie.bind(this);
     }
 
     fetchMovies(){
@@ -23,6 +26,27 @@ class MovieList extends React.Component {
         });
     }
 
+    addMovie(movie){
+        const movies = this.state.movies;
+        movie.id = movies.length + 1;
+
+        movies.push(movie);
+
+        this.setState({
+            movies: movies,
+        });
+    }
+
+    editMovie(movie){
+        const movies = this.state.movies;
+        let index = movies.findIndex(m => movie.id == m.id);
+        movies[index] = movie;
+
+        this.setState({
+            movies: movies,
+        });
+    }
+
     componentDidMount(){
         this.fetchMovies().then(movies => {
             this.setState({
@@ -34,7 +58,13 @@ class MovieList extends React.Component {
     render(){
         return (
             <div>
-                { this.state.movies.map(movie => <MovieInfo key={movie.id} movie={movie}/>)}
+                <ModalMovie type="Add" action={ this.addMovie }/>
+                { this.state.movies.map(movie => 
+                    <div key={`wrapper${movie.id}`}>
+                        <MovieInfo key={movie.id} id={movie.id} movie={movie}/>
+                        <ModalMovie key={`modal${movie.id}`} id={movie.id} type="Edit" action={ this.editMovie } movie={movie}/>
+                    </div>
+                )}
             </div>
         );
     }
