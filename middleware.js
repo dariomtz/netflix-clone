@@ -73,8 +73,8 @@ function middleware(){
         next();
     }
 
-    this.movieExists = (req, res, next) => {
-        const movie = moviesDH.getMovie(req.params.id);
+    this.movieExists = async (req, res, next) => {
+        const movie = await moviesDH.getMovie(req.params.id);
         if(!movie) {
             res.status(404).send('The movie with this id does not exist.');
             return;
