@@ -3,7 +3,7 @@
 class ModalMovie extends React.Component {
     constructor(props){
         super(props);
-        this.key = this.props.key;
+        this.key = this.props.id;
         this.type = this.props.type;
         this.action = this.props.action;
         this.movie = this.props.movie || {};
@@ -21,7 +21,7 @@ class ModalMovie extends React.Component {
 
     buildMovie(){
         return {
-            id: this.props.movies+1,
+            id: this.movie ? this.movie.id : undefined,
             title: $(`#movieTitle${ this.type }${ this.key || '' }`).val(),
             description: $(`#movieDescription${ this.type }${ this.key || '' }`).val(),
             image: $(`#movieImage${ this.type }${ this.key || '' }`).val(),

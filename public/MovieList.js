@@ -21,6 +21,7 @@ var MovieList = function (_React$Component) {
         };
 
         _this.addMovie = _this.addMovie.bind(_this);
+        _this.editMovie = _this.editMovie.bind(_this);
         return _this;
     }
 
@@ -42,7 +43,22 @@ var MovieList = function (_React$Component) {
         key: "addMovie",
         value: function addMovie(movie) {
             var movies = this.state.movies;
+            movie.id = movies.length + 1;
+
             movies.push(movie);
+
+            this.setState({
+                movies: movies
+            });
+        }
+    }, {
+        key: "editMovie",
+        value: function editMovie(movie) {
+            var movies = this.state.movies;
+            var index = movies.findIndex(function (m) {
+                return movie.id == m.id;
+            });
+            movies[index] = movie;
 
             this.setState({
                 movies: movies
@@ -62,12 +78,19 @@ var MovieList = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
+            var _this3 = this;
+
             return React.createElement(
                 "div",
                 null,
                 React.createElement(ModalMovie, { type: "Add", action: this.addMovie }),
                 this.state.movies.map(function (movie) {
-                    return React.createElement(MovieInfo, { key: movie.id, movie: movie });
+                    return React.createElement(
+                        "div",
+                        { key: "wrapper" + movie.id },
+                        React.createElement(MovieInfo, { key: movie.id, id: movie.id, movie: movie }),
+                        React.createElement(ModalMovie, { key: "modal" + movie.id, id: movie.id, type: "Edit", action: _this3.editMovie, movie: movie })
+                    );
                 })
             );
         }
