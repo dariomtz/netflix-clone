@@ -9,6 +9,7 @@ class MovieList extends React.Component {
 
         this.addMovie = this.addMovie.bind(this);
         this.editMovie = this.editMovie.bind(this);
+        this.deleteMovie = this.deleteMovie.bind(this);
     }
 
     fetchMovies(){
@@ -47,6 +48,16 @@ class MovieList extends React.Component {
         });
     }
 
+    deleteMovie(id){
+        const movies = this.state.movies;
+        let index = movies.findIndex(movie => id == movie.id);
+        movies.splice(index, 1);
+
+        this.setState({
+            movies: movies,
+        });
+    }
+
     componentDidMount(){
         this.fetchMovies().then(movies => {
             this.setState({
@@ -61,7 +72,7 @@ class MovieList extends React.Component {
                 <ModalMovie type="Add" action={ this.addMovie }/>
                 { this.state.movies.map(movie => 
                     <div key={`wrapper${movie.id}`}>
-                        <MovieInfo key={movie.id} id={movie.id} movie={movie}/>
+                        <MovieInfo key={movie.id} id={movie.id} movie={movie} delete={ this.deleteMovie }/>
                         <ModalMovie key={`modal${movie.id}`} id={movie.id} type="Edit" action={ this.editMovie } movie={movie}/>
                     </div>
                 )}

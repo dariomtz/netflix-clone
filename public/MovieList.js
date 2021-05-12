@@ -22,6 +22,7 @@ var MovieList = function (_React$Component) {
 
         _this.addMovie = _this.addMovie.bind(_this);
         _this.editMovie = _this.editMovie.bind(_this);
+        _this.deleteMovie = _this.deleteMovie.bind(_this);
         return _this;
     }
 
@@ -65,6 +66,19 @@ var MovieList = function (_React$Component) {
             });
         }
     }, {
+        key: "deleteMovie",
+        value: function deleteMovie(id) {
+            var movies = this.state.movies;
+            var index = movies.findIndex(function (movie) {
+                return id == movie.id;
+            });
+            movies.splice(index, 1);
+
+            this.setState({
+                movies: movies
+            });
+        }
+    }, {
         key: "componentDidMount",
         value: function componentDidMount() {
             var _this2 = this;
@@ -88,7 +102,7 @@ var MovieList = function (_React$Component) {
                     return React.createElement(
                         "div",
                         { key: "wrapper" + movie.id },
-                        React.createElement(MovieInfo, { key: movie.id, id: movie.id, movie: movie }),
+                        React.createElement(MovieInfo, { key: movie.id, id: movie.id, movie: movie, "delete": _this3.deleteMovie }),
                         React.createElement(ModalMovie, { key: "modal" + movie.id, id: movie.id, type: "Edit", action: _this3.editMovie, movie: movie })
                     );
                 })
