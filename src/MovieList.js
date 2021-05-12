@@ -27,12 +27,22 @@ class MovieList extends React.Component {
 
     addMovie(movie){
         const movies = this.state.movies;
-        movie._id = movies.length + 1;
+        fetch('/api/movies', {
+            method: 'POST',
+            headers: {
+                'api-key': sessionStorage.getItem('key'),
+                'auth-token': sessionStorage.getItem('token'),
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(movie),
+        })
+        .then(response => response.json())
+        .then(data =>{
+            movies.push(data);
 
-        movies.push(movie);
-
-        this.setState({
-            movies: movies,
+            this.setState({
+                movies: movies,
+            });
         });
     }
 
