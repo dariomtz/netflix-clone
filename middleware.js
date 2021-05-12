@@ -20,9 +20,9 @@ function middleware(){
         next();
     }
 
-    this.authentication = (req, res, next) => {
+    this.authentication = async (req, res, next) => {
         let session = req.header('auth-token');
-        if(!usersDH.validSession(session)){
+        if(await !usersDH.validSession(session)){
             res.status(403);
             res.send('User not authenticated.');
             return;
@@ -45,7 +45,6 @@ function middleware(){
 
     this.validateUser = (req, res, next) => {
         const result = usersDH.validateUser(req.body);
-
         if(result.error){
             res.status(400).send(result.error.details[0].message);
             return;
@@ -53,9 +52,8 @@ function middleware(){
         next();
     }
 
-    this.userExists = (req, res, next) => {
-        const user = usersDH.getUser(req.params.id);
-
+    this.userExists = async (req, res, next) => {
+        const user = await usersDH.getUser(req.params.id);
         if(!user) {
             res.status(404).send('The user with this id does not exist.');
             return;

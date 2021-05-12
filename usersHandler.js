@@ -1,17 +1,13 @@
 "use-strict";
 
 const Joi = require('joi');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const shortId = require('shortid');
 
 //Temporal URI, when deploy change to deploy database and credentials
 const uri = 'mongodb+srv://gus-production:QtQX4awd0QYt9Lba@production.zwp4w.mongodb.net/netflix-clone?retryWrites=true&w=majority';
 
 function usersHandler(){
-    this.users = [];
-    this.lastUserId = 0;
-    this.sessions = {};
-
     this.userSchema = Joi.object({
         name: Joi.string()
                 .min(2)
@@ -35,7 +31,6 @@ function usersHandler(){
                 .less('now')
                 .required(),
     });
-
     this.generateAPIKey = () => {
         let newKey = shortId.generate();
         let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
@@ -54,20 +49,18 @@ function usersHandler(){
         });
         return newKey;
     };
-
     this.validKey = async (searchKey) => {
         let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
         await client.connect();
         let key = await client.db('netflix-clone').collection('API').findOne({key:searchKey});
+        client.close();
         return key !== null;
-    }
-
+    };
     this.saveTransaction = (searchKey, transaction) => {
         let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
         client.connect().then(()=>{
             client.db('netflix-clone').collection('API').findOne({key:searchKey}).then(key=>{               
                 if(key === null) return;
-                console.log(key);
                 key.transactions.push(transaction);
                 client.db('netflix-clone').collection('API').updateOne(
                     {key:searchKey},
@@ -75,66 +68,93 @@ function usersHandler(){
                         calls_per_day:key.calls_per_day+1,
                         transactions:key.transactions
                     }}
-                );
+                ).then(()=>client.close());
             });
         });
-    }
-
-    this.signin = (signin) => {
-        let user = this.getUserByEmail(signin.email);
+    };
+    this.signin = async (signin) => {
+        let user = await this.getUserByEmail(signin.email);
         if (!user) return null;
         if (user.password !== signin.password) return null;
-
-        return user.id;
-    }
-
-    this.createSession = (userId) => {
+        return user._id;
+    };
+    this.createSession = async (userId) => {
+        //TODO: IMPLEMENT JWT AUTH FOR SESION
         let session = `${ shortId.generate() }/${ userId }`;
-        this.sessions[session] = {
-            created: Date.now(),
-        };
+        let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+        await client.connect();
+        let searchedSession = await client.db('netflix-clone').collection('sessions').findOne({session:session});
+        if(searchedSession === null){
+            await client.db('netflix-clone').collection('sessions').insertOne({
+                session: session,
+                date: Date.now()
+            });
+            client.close();
+        }
         return session;
-    }
-
-    this.validSession = (session) => {
-        return this.sessions[session] !== undefined;
-    }
-
+    };
+    this.validSession = async (session) => {
+        let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+        await client.connect();
+        let searchedSession = await client.db('netflix-clone').collection('sessions').findOne({session:session});
+        client.close();
+        return searchedSession !== null;
+    };
     this.validateUser = (user) => {
         return this.userSchema.validate(user);
-    }
+    };
+    this.getUser = async (id) => {
+        let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+        await client.connect();
+        let key = await client.db('netflix-clone').collection('users').findOne({_id:ObjectId(id)});
+        client.close();
+        return key;
+    };
+    this.getUserByEmail = async (email) => {
+        let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+        await client.connect();
+        let key = await client.db('netflix-clone').collection('users').findOne({email:email});
+        client.close();
+        return key;
+    };
 
-    this.getUser = (id) => {
-        return this.users.find(user => user.id == id);
-    }
-
-    this.getUserByEmail = (email) => {
-        return this.users.find(u => u.email == email);
-    }
-
-    this.postUser = (user) => {
-        let u = this.getUserByEmail(user.email);
+    this.postUser = async (user) => {
+        let u = await this.getUserByEmail(user.email);
         if(u) return null;
-        user.id = ++this.lastUserId;
         delete user.confirm_password;
-        this.users.push(user);
+        let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+        await client.connect();
+        await client.db('netflix-clone').collection('users').insertOne(user);
+        await client.close();
         return user;
-    }
+    };
 
-    this.putUser = (id, user) => {
-        const index = this.users.findIndex(user => user.id == id);
-        user.id = id;
-        user.email = this.users[index].email;
-        delete user.confirm_password;
-        this.users[index] = user;
+    this.putUser = async (id, user) => {
+        let oldUser = await this.getUser(id);
+        if(!oldUser) return;
+
+        let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+        await client.connect(); 
+        client.db('netflix-clone').collection('users').updateOne(
+            {_id:ObjectId(id)},
+            {$set: {
+                name: user.name,
+                last_name: user.last_name,
+                password: user.password,
+                birthday: user.birthday,
+                picture: user.picture,
+            }}
+        ).then(()=>client.close());
         return user;
-    }
-
-    this.deleteUser = (id) => {
-        const index = this.users.findIndex(user => user.id == id);
-        this.users.splice(index, 1);
-    }
-    
+    };
+    this.deleteUser = async (id) => {
+        let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+        await client.connect(); 
+        client.db('netflix-clone').collection('users').deleteOne({
+            _id:ObjectId(id)
+        }, (err, obj) =>{
+            client.close();
+        });
+    };
 }
-
 module.exports = new usersHandler();
