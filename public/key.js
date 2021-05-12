@@ -1,0 +1,1 @@
+sessionStorage.setItem('key', 'X59OKBiPO');

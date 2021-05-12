@@ -27,24 +27,26 @@ var MovieList = function (_React$Component) {
     }
 
     _createClass(MovieList, [{
-        key: "fetchMovies",
+        key: 'fetchMovies',
         value: function fetchMovies() {
             return new Promise(function (resolve) {
-                resolve([{
-                    "id": "1",
-                    "title": "Peli chida",
-                    "description": "ES una peli chida bien chida",
-                    "image": "https://expressjs.com/en/guide/using-middleware.html",
-                    "trailer": "https://expressjs.com/en/guide/using-middleware.html",
-                    "thumbnail": "https://expressjs.com/en/guide/using-middleware.html"
-                }]);
+                fetch('/api/movies?detail=true', {
+                    headers: {
+                        'api-key': sessionStorage.getItem('key'),
+                        'auth-token': sessionStorage.getItem('token')
+                    }
+                }).then(function (response) {
+                    return response.json();
+                }).then(function (data) {
+                    return resolve(data);
+                });
             });
         }
     }, {
-        key: "addMovie",
+        key: 'addMovie',
         value: function addMovie(movie) {
             var movies = this.state.movies;
-            movie.id = movies.length + 1;
+            movie._id = movies.length + 1;
 
             movies.push(movie);
 
@@ -53,11 +55,11 @@ var MovieList = function (_React$Component) {
             });
         }
     }, {
-        key: "editMovie",
+        key: 'editMovie',
         value: function editMovie(movie) {
             var movies = this.state.movies;
             var index = movies.findIndex(function (m) {
-                return movie.id == m.id;
+                return movie._id == m.id;
             });
             movies[index] = movie;
 
@@ -66,11 +68,11 @@ var MovieList = function (_React$Component) {
             });
         }
     }, {
-        key: "deleteMovie",
+        key: 'deleteMovie',
         value: function deleteMovie(id) {
             var movies = this.state.movies;
             var index = movies.findIndex(function (movie) {
-                return id == movie.id;
+                return id == movie._id;
             });
             movies.splice(index, 1);
 
@@ -79,7 +81,7 @@ var MovieList = function (_React$Component) {
             });
         }
     }, {
-        key: "componentDidMount",
+        key: 'componentDidMount',
         value: function componentDidMount() {
             var _this2 = this;
 
@@ -90,20 +92,20 @@ var MovieList = function (_React$Component) {
             });
         }
     }, {
-        key: "render",
+        key: 'render',
         value: function render() {
             var _this3 = this;
 
             return React.createElement(
-                "div",
+                'div',
                 null,
-                React.createElement(ModalMovie, { type: "Add", action: this.addMovie }),
+                React.createElement(ModalMovie, { type: 'Add', action: this.addMovie }),
                 this.state.movies.map(function (movie) {
                     return React.createElement(
-                        "div",
-                        { key: "wrapper" + movie.id },
-                        React.createElement(MovieInfo, { key: movie.id, id: movie.id, movie: movie, "delete": _this3.deleteMovie }),
-                        React.createElement(ModalMovie, { key: "modal" + movie.id, id: movie.id, type: "Edit", action: _this3.editMovie, movie: movie })
+                        'div',
+                        { key: 'wrapper' + movie._id },
+                        React.createElement(MovieInfo, { key: movie._id, id: movie._id, movie: movie, 'delete': _this3.deleteMovie }),
+                        React.createElement(ModalMovie, { key: 'modal' + movie._id, id: movie._id, type: 'Edit', action: _this3.editMovie, movie: movie })
                     );
                 })
             );

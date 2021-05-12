@@ -29,12 +29,15 @@ function moviesHandler(){
         return this.movieSchema.validate(movie);
     };
 
-    this.getMovies = async () => {
+    this.getMovies = async (detail) => {
         let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
         await client.connect();
         let movies = await client.db('netflix-clone').collection('movies').find().toArray();
         console.log(movies);
         await client.close();
+        if (detail){
+            return movies;
+        }
         return movies.map((value)=>{
             return {
                 thumbnail: value.thumbnail,
