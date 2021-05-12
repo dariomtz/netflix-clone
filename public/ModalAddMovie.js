@@ -11,108 +11,146 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var ModalAddMovie = function (_React$Component) {
     _inherits(ModalAddMovie, _React$Component);
 
-    function ModalAddMovie() {
+    function ModalAddMovie(props) {
         _classCallCheck(this, ModalAddMovie);
 
-        return _possibleConstructorReturn(this, (ModalAddMovie.__proto__ || Object.getPrototypeOf(ModalAddMovie)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (ModalAddMovie.__proto__ || Object.getPrototypeOf(ModalAddMovie)).call(this, props));
+
+        _this.addMovie = _this.addMovie.bind(_this);
+        return _this;
     }
 
     _createClass(ModalAddMovie, [{
-        key: "render",
+        key: 'addMovie',
+        value: function addMovie(event) {
+            event.preventDefault();
+            var movie = this.buildMovie();
+
+            this.props.addMovie(movie);
+            $('#addMovie').modal('hide');
+            this.clearForm();
+        }
+    }, {
+        key: 'buildMovie',
+        value: function buildMovie() {
+            return {
+                id: this.props.movies + 1,
+                title: $('#movieTitle').val(),
+                description: $('#movieDescription').val(),
+                image: $('#movieImage').val(),
+                trailer: $('#movieTrailer').val(),
+                thumbnail: $('#movieThumbnail').val()
+            };
+        }
+    }, {
+        key: 'clearForm',
+        value: function clearForm() {
+            $('#movieTitle').val('');
+            $('#movieDescription').val('');
+            $('#movieImage').val('');
+            $('#movieTrailer').val('');
+            $('#movieThumbnail').val('');
+        }
+    }, {
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "div",
-                { className: "modal fade", id: "addMovie", tabindex: "-1", "aria-hidden": "true" },
+                'div',
+                { className: 'modal fade', id: 'addMovie', tabIndex: '-1', 'aria-hidden': 'true' },
                 React.createElement(
-                    "div",
-                    { className: "modal-dialog" },
+                    'div',
+                    { className: 'modal-dialog' },
                     React.createElement(
-                        "div",
-                        { className: "modal-content" },
+                        'div',
+                        { className: 'modal-content' },
                         React.createElement(
-                            "div",
-                            { className: "modal-header" },
+                            'div',
+                            { className: 'modal-header' },
                             React.createElement(
-                                "h5",
-                                { className: "modal-title" },
-                                "Add Movie"
+                                'h5',
+                                { className: 'modal-title' },
+                                'Add Movie'
                             ),
                             React.createElement(
-                                "button",
-                                { type: "button", className: "close", "data-dismiss": "modal", "aria-label": "Close" },
+                                'button',
+                                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
                                 React.createElement(
-                                    "span",
-                                    { "aria-hidden": "true" },
-                                    "\xD7"
+                                    'span',
+                                    { 'aria-hidden': 'true' },
+                                    '\xD7'
                                 )
                             )
                         ),
                         React.createElement(
-                            "div",
-                            { className: "modal-body" },
+                            'form',
+                            { onSubmit: this.addMovie },
                             React.createElement(
-                                "div",
-                                { "class": "form-group" },
+                                'div',
+                                { className: 'modal-body' },
                                 React.createElement(
-                                    "label",
-                                    { "for": "movieTitle" },
-                                    "Movie title"
+                                    'div',
+                                    { className: 'form-group' },
+                                    React.createElement(
+                                        'label',
+                                        { htmlFor: 'movieTitle' },
+                                        'Movie title'
+                                    ),
+                                    React.createElement('input', { type: 'text', className: 'form-control', id: 'movieTitle', 'aria-describedby': 'emailHelp', required: true })
                                 ),
-                                React.createElement("input", { type: "text", "class": "form-control", id: "movieTitle", "aria-describedby": "emailHelp" })
+                                React.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    React.createElement(
+                                        'label',
+                                        { htmlFor: 'movieDescription' },
+                                        'Description'
+                                    ),
+                                    React.createElement('input', { type: 'text', className: 'form-control', id: 'movieDescription', required: true })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    React.createElement(
+                                        'label',
+                                        { htmlFor: 'movieImage' },
+                                        'Image'
+                                    ),
+                                    React.createElement('input', { type: 'url', className: 'form-control', id: 'movieImage', required: true })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    React.createElement(
+                                        'label',
+                                        { htmlFor: 'movieTrailer' },
+                                        'Trailer'
+                                    ),
+                                    React.createElement('input', { type: 'url', className: 'form-control', id: 'movieTrailer', required: true })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    React.createElement(
+                                        'label',
+                                        { htmlFor: 'movieThumbnail' },
+                                        'Thumbnail'
+                                    ),
+                                    React.createElement('input', { type: 'url', className: 'form-control', id: 'movieThumbnail', required: true })
+                                )
                             ),
                             React.createElement(
-                                "div",
-                                { "class": "form-group" },
+                                'div',
+                                { className: 'modal-footer' },
                                 React.createElement(
-                                    "label",
-                                    { "for": "movieDescription" },
-                                    "Description"
+                                    'button',
+                                    { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
+                                    'Close'
                                 ),
-                                React.createElement("input", { type: "text", "class": "form-control", id: "movieDescription" })
-                            ),
-                            React.createElement(
-                                "div",
-                                { "class": "form-group" },
                                 React.createElement(
-                                    "label",
-                                    { "for": "movieImage" },
-                                    "Image"
-                                ),
-                                React.createElement("input", { type: "url", "class": "form-control", id: "movieImage" })
-                            ),
-                            React.createElement(
-                                "div",
-                                { "class": "form-group" },
-                                React.createElement(
-                                    "label",
-                                    { "for": "movieTrailer" },
-                                    "Trailer"
-                                ),
-                                React.createElement("input", { type: "url", "class": "form-control", id: "movieTrailer" })
-                            ),
-                            React.createElement(
-                                "div",
-                                { "class": "form-group" },
-                                React.createElement(
-                                    "label",
-                                    { "for": "movieThumbnail" },
-                                    "Thumbnail"
-                                ),
-                                React.createElement("input", { type: "url", "class": "form-control", id: "movieThumbnail" })
-                            )
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "modal-footer" },
-                            React.createElement(
-                                "button",
-                                { type: "button", className: "btn btn-secondary", "data-dismiss": "modal" },
-                                "Close"
-                            ),
-                            React.createElement(
-                                "button",
-                                { type: "button", className: "btn btn-primary" },
-                                "Add Movie"
+                                    'button',
+                                    { type: 'submit', className: 'btn btn-primary' },
+                                    'Add Movie'
+                                )
                             )
                         )
                     )

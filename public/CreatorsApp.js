@@ -44,7 +44,6 @@ var CreatorsApp = function (_React$Component) {
                         )
                     )
                 ),
-                React.createElement(ModalAddMovie, null),
                 React.createElement(MovieList, null)
             );
         }

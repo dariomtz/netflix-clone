@@ -6,6 +6,8 @@ class MovieList extends React.Component {
         this.state = {
             movies: [],
         }
+
+        this.addMovie = this.addMovie.bind(this);
     }
 
     fetchMovies(){
@@ -23,6 +25,15 @@ class MovieList extends React.Component {
         });
     }
 
+    addMovie(movie){
+        const movies = this.state.movies;
+        movies.push(movie);
+
+        this.setState({
+            movies: movies,
+        });
+    }
+
     componentDidMount(){
         this.fetchMovies().then(movies => {
             this.setState({
@@ -34,6 +45,7 @@ class MovieList extends React.Component {
     render(){
         return (
             <div>
+                <ModalAddMovie addMovie={this.addMovie} movies={this.state.movies.length}/>
                 { this.state.movies.map(movie => <MovieInfo key={movie.id} movie={movie}/>)}
             </div>
         );

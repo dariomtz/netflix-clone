@@ -15,7 +15,6 @@ class CreatorsApp extends React.Component {
                     </button>
                 </div>
             </div>
-            <ModalAddMovie/>
             <MovieList />
         </div>   
     );

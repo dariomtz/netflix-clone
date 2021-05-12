@@ -19,6 +19,8 @@ var MovieList = function (_React$Component) {
         _this.state = {
             movies: []
         };
+
+        _this.addMovie = _this.addMovie.bind(_this);
         return _this;
     }
 
@@ -34,6 +36,16 @@ var MovieList = function (_React$Component) {
                     "trailer": "https://expressjs.com/en/guide/using-middleware.html",
                     "thumbnail": "https://expressjs.com/en/guide/using-middleware.html"
                 }]);
+            });
+        }
+    }, {
+        key: "addMovie",
+        value: function addMovie(movie) {
+            var movies = this.state.movies;
+            movies.push(movie);
+
+            this.setState({
+                movies: movies
             });
         }
     }, {
@@ -53,6 +65,7 @@ var MovieList = function (_React$Component) {
             return React.createElement(
                 "div",
                 null,
+                React.createElement(ModalAddMovie, { addMovie: this.addMovie, movies: this.state.movies.length }),
                 this.state.movies.map(function (movie) {
                     return React.createElement(MovieInfo, { key: movie.id, movie: movie });
                 })
