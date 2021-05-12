@@ -9,13 +9,12 @@ class CreatorsApp extends React.Component {
             <div className="d-flex justify-content-between">
                 <h1 className="text-white">Movies</h1>
                 <div className="p-2">
-                    <button className="btn btn-light text-danger" data-toggle="modal" data-target="#addMovie">
+                    <button className="btn btn-light text-danger" data-toggle="modal" data-target="#movieAdd">
                         <PlusSign/>
                         Add movie
                     </button>
                 </div>
             </div>
-            <ModalAddMovie/>
             <MovieList />
         </div>   
     );

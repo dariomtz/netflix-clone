@@ -38,13 +38,12 @@ var CreatorsApp = function (_React$Component) {
                         { className: "p-2" },
                         React.createElement(
                             "button",
-                            { className: "btn btn-light text-danger", "data-toggle": "modal", "data-target": "#addMovie" },
+                            { className: "btn btn-light text-danger", "data-toggle": "modal", "data-target": "#movieAdd" },
                             React.createElement(PlusSign, null),
                             "Add movie"
                         )
                     )
                 ),
-                React.createElement(ModalAddMovie, null),
                 React.createElement(MovieList, null)
             );
         }
