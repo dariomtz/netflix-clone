@@ -14,22 +14,20 @@ class MovieList extends React.Component {
 
     fetchMovies(){
         return new Promise((resolve) => {
-            resolve([
-                {
-                    "id": "1",
-                    "title": "Peli chida",
-                    "description": "ES una peli chida bien chida",
-                    "image": "https://expressjs.com/en/guide/using-middleware.html",
-                    "trailer": "https://expressjs.com/en/guide/using-middleware.html",
-                    "thumbnail": "https://expressjs.com/en/guide/using-middleware.html",
-                }
-            ]);
+            fetch('/api/movies?detail=true', {
+                headers: {
+                    'api-key': sessionStorage.getItem('key'),
+                    'auth-token': sessionStorage.getItem('token'),
+                },
+            })
+            .then(response => response.json())
+            .then(data => resolve(data));
         });
     }
 
     addMovie(movie){
         const movies = this.state.movies;
-        movie.id = movies.length + 1;
+        movie._id = movies.length + 1;
 
         movies.push(movie);
 
@@ -40,7 +38,7 @@ class MovieList extends React.Component {
 
     editMovie(movie){
         const movies = this.state.movies;
-        let index = movies.findIndex(m => movie.id == m.id);
+        let index = movies.findIndex(m => movie._id == m.id);
         movies[index] = movie;
 
         this.setState({
@@ -50,7 +48,7 @@ class MovieList extends React.Component {
 
     deleteMovie(id){
         const movies = this.state.movies;
-        let index = movies.findIndex(movie => id == movie.id);
+        let index = movies.findIndex(movie => id == movie._id);
         movies.splice(index, 1);
 
         this.setState({
@@ -71,9 +69,9 @@ class MovieList extends React.Component {
             <div>
                 <ModalMovie type="Add" action={ this.addMovie }/>
                 { this.state.movies.map(movie => 
-                    <div key={`wrapper${movie.id}`}>
-                        <MovieInfo key={movie.id} id={movie.id} movie={movie} delete={ this.deleteMovie }/>
-                        <ModalMovie key={`modal${movie.id}`} id={movie.id} type="Edit" action={ this.editMovie } movie={movie}/>
+                    <div key={`wrapper${movie._id}`}>
+                        <MovieInfo key={movie._id} id={movie._id} movie={movie} delete={ this.deleteMovie }/>
+                        <ModalMovie key={`modal${movie._id}`} id={movie._id} type="Edit" action={ this.editMovie } movie={movie}/>
                     </div>
                 )}
             </div>
