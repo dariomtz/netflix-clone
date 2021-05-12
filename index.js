@@ -25,9 +25,8 @@ app.get('/api/key', (req, res) => {
     });
 });
 
-app.post('/api/signin', (req, res)=>{
-    let userId = dh.signin(req.body);
-
+app.post('/api/signin', async (req, res)=>{
+    let userId = await dh.signin(req.body);
     if(!userId){
         res.status(400);
         res.send('Bad singin information. Check email and password.');
@@ -35,7 +34,7 @@ app.post('/api/signin', (req, res)=>{
     }
 
     res.send({
-        token: dh.createSession(userId),
+        token: await dh.createSession(userId),
     });
 });
 

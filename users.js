@@ -12,11 +12,11 @@ app.use('/:id', middleware.authentication);
 app.use('/:id', middleware.authorization);
 app.use('/:id', middleware.userExists);
 
-app.post('/').put('/:id').use(middleware.validateUser);
-
+app.post('/', middleware.validateUser);
+app.put('/:id', middleware.validateUser);
 //endpoints
-app.post('/', (req, res) => {
-    const user = dh.postUser(req.body);
+app.post('/', async (req, res) => {
+    const user = await dh.postUser(req.body);
 
     if (!user){
         res.status(400).send('Email already in use for another account.');
@@ -30,13 +30,13 @@ app.get('/:id', (req, res) => {
     res.send(req.user);
 });
 
-app.put('/:id', (req, res) => {
-    const user = dh.putUser(req.params.id, req.body);
+app.put('/:id', async (req, res) => {
+    const user = await dh.putUser(req.params.id, req.body);
     res.send(user);
 });
 
-app.delete('/:id', (req, res) => {
-    dh.deleteUser(req.params.id);
+app.delete('/:id', async (req, res) => {
+    await dh.deleteUser(req.params.id);
     res.status(204).send();
 });
 

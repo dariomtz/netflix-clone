@@ -12,29 +12,28 @@ app.use(middleware.authentication);
 
 app.use('/:id', middleware.movieExists);
 
-// app.post('/', middleware.validateMovie);
-// app.put('/:id', middleware.validateMovie);
-app.post('/').put('/:id').use(middleware.validateMovie);
+app.post('/', middleware.validateMovie);
+app.put('/:id', middleware.validateMovie);
 
 //endpoints
-app.get('/', (req, res) => {
-    res.send(dh.getMovies());
+app.get('/', async (req, res) => {
+    res.send(await dh.getMovies());
 });
 
-app.post('/', (req, res) => {
-    res.status(201).send(dh.postMovie(req.movie));
+app.post('/', async (req, res) => {
+    res.status(201).send(await dh.postMovie(req.movie));
 });
 
 app.get('/:id', (req, res) => {
     res.send(req.movie);
 });
 
-app.put('/:id', (req, res) => {
-    res.send(dh.putMovie(req.movieId, req.body));
+app.put('/:id', async (req, res) => {
+    res.send(await dh.putMovie(req.movieId, req.body));
 });
 
-app.delete('/:id', (req, res) => {
-    dh.deleteMovie(req.movieId);
+app.delete('/:id', async (req, res) => {
+    await dh.deleteMovie(req.movieId);
     res.status(204).send();
 });
 

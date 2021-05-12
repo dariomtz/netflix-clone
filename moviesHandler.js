@@ -1,6 +1,9 @@
 "use-strict";
 
 const Joi = require('joi');
+const { MongoClient, ObjectId } = require('mongodb');
+//Temporal URI, when deploy change to deploy database and credentials
+const uri = 'mongodb+srv://gus-production:QtQX4awd0QYt9Lba@production.zwp4w.mongodb.net/netflix-clone?retryWrites=true&w=majority';
 
 function moviesHandler(){
     this.lastMovieId = 0;
@@ -24,37 +27,65 @@ function moviesHandler(){
 
     this.validateMovie = (movie) => {
         return this.movieSchema.validate(movie);
-    }
+    };
 
-    this.getMovies = () => {
-        return this.movies.map((value)=>{
+    this.getMovies = async () => {
+        let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+        await client.connect();
+        let movies = await client.db('netflix-clone').collection('movies').find().toArray();
+        console.log(movies);
+        await client.close();
+        return movies.map((value)=>{
             return {
                 thumbnail: value.thumbnail,
-                id: value.id
-            }
+                id: value._id
+            };
         });
-    }
+    };
 
-    this.getMovie = (id) => {
-        return this.movies.find(movie => id == movie.id);
-    }
+    this.getMovie = async (id) => {
+        let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+        await client.connect();
+        let movie = await client.db('netflix-clone').collection('movies').findOne({_id:ObjectId(id)});
+        await client.close();
+        return movie;
+    };
 
-    this.postMovie = (movie) => {
-        movie.id = ++this.lastMovieId;
-        this.movies.push(movie);
+    this.postMovie = async (movie) => {
+        let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+        await client.connect();
+        await client.db('netflix-clone').collection('movies').insertOne(movie);
+        client.close();
         return movie;
     }
 
-    this.putMovie = (id, movie) => {
-        const index = this.movies.findIndex(movies => movies.id == id);
-        movie.id = id;
-        this.movies[index] = movie;
+    this.putMovie = async (id, movie) => {
+        let oldMovie = await this.getMovie(id);
+        if(oldMovie){
+            let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+            await client.connect();
+            await client.db('netflix-clone').collection('movies').updateOne(
+                {_id:ObjectId(id)},
+                { $set:{
+                        title:movie.title,
+                        description:movie.description,
+                        image:movie.image,
+                        trailer:movie.trailer,
+                        thumbnail:movie.thumbnail
+                    }
+                }).then(()=>client.close());
+        }
         return movie;
     }
 
-    this.deleteMovie = (id) => {
-        const index = this.movies.findIndex(movie => movie.id == id);
-        this.movies.splice(index, 1);
+    this.deleteMovie = async (id) => {
+        let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+        await client.connect(); 
+        client.db('netflix-clone').collection('movies').deleteOne({
+            _id:ObjectId(id)
+        }, (err, obj) =>{
+            client.close();
+        });
     }
 }
 
