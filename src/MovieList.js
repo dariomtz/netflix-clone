@@ -48,11 +48,25 @@ class MovieList extends React.Component {
 
     editMovie(movie){
         const movies = this.state.movies;
-        let index = movies.findIndex(m => movie._id == m.id);
-        movies[index] = movie;
+        let id = movie._id;
+        delete movie._id;
+        let index = movies.findIndex(m => id == m._id);
+        fetch(`/api/movies/${ id }`, {
+            method: 'PUT',
+            headers: {
+                'api-key': sessionStorage.getItem('key'),
+                'auth-token': sessionStorage.getItem('token'),
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(movie),
+        })
+        .then(response => response.json())
+        .then(data => {
+            movies[index] = data;
 
-        this.setState({
-            movies: movies,
+            this.setState({
+                movies: movies,
+            });
         });
     }
 

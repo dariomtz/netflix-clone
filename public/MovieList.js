@@ -69,14 +69,30 @@ var MovieList = function (_React$Component) {
     }, {
         key: 'editMovie',
         value: function editMovie(movie) {
-            var movies = this.state.movies;
-            var index = movies.findIndex(function (m) {
-                return movie._id == m.id;
-            });
-            movies[index] = movie;
+            var _this3 = this;
 
-            this.setState({
-                movies: movies
+            var movies = this.state.movies;
+            var id = movie._id;
+            delete movie._id;
+            var index = movies.findIndex(function (m) {
+                return id == m._id;
+            });
+            fetch('/api/movies/' + id, {
+                method: 'PUT',
+                headers: {
+                    'api-key': sessionStorage.getItem('key'),
+                    'auth-token': sessionStorage.getItem('token'),
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(movie)
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                movies[index] = data;
+
+                _this3.setState({
+                    movies: movies
+                });
             });
         }
     }, {
@@ -95,10 +111,10 @@ var MovieList = function (_React$Component) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.fetchMovies().then(function (movies) {
-                _this3.setState({
+                _this4.setState({
                     movies: movies
                 });
             });
@@ -106,7 +122,7 @@ var MovieList = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this4 = this;
+            var _this5 = this;
 
             return React.createElement(
                 'div',
@@ -116,8 +132,8 @@ var MovieList = function (_React$Component) {
                     return React.createElement(
                         'div',
                         { key: 'wrapper' + movie._id },
-                        React.createElement(MovieInfo, { key: movie._id, id: movie._id, movie: movie, 'delete': _this4.deleteMovie }),
-                        React.createElement(ModalMovie, { key: 'modal' + movie._id, id: movie._id, type: 'Edit', action: _this4.editMovie, movie: movie })
+                        React.createElement(MovieInfo, { key: movie._id, id: movie._id, movie: movie, 'delete': _this5.deleteMovie }),
+                        React.createElement(ModalMovie, { key: 'modal' + movie._id, id: movie._id, type: 'Edit', action: _this5.editMovie, movie: movie })
                     );
                 })
             );

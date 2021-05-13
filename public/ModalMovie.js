@@ -38,7 +38,7 @@ var ModalMovie = function (_React$Component) {
         key: 'buildMovie',
         value: function buildMovie() {
             return {
-                id: this.movie ? this.movie.id : undefined,
+                _id: this.movie ? this.movie._id : undefined,
                 title: $('#movieTitle' + this.type + (this.key || '')).val(),
                 description: $('#movieDescription' + this.type + (this.key || '')).val(),
                 image: $('#movieImage' + this.type + (this.key || '')).val(),
