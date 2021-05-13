@@ -41,7 +41,7 @@ function moviesHandler(){
         return movies.map((value)=>{
             return {
                 thumbnail: value.thumbnail,
-                id: value._id
+                _id: value._id
             };
         });
     };
