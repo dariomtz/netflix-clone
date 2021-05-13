@@ -13,8 +13,8 @@ app.get('/signup', (req, res) => {
 app.get('/menupelis', (req, res) => {
 	res.sendFile(__dirname + '/public/menupelis.html');
 });
-app.get('/detallepelis', (req, res) => {
-	res.sendFile(__dirname + '/public/detallepelis.html');
+app.get('/movie/:id', (req, res) => {
+	res.sendFile(__dirname + '/public/movie.html');
 });
 app.get('/creadores', (req, res) => {
 	res.sendFile(__dirname + '/public/creadores.html');
