@@ -17,7 +17,7 @@ var MovieList = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (MovieList.__proto__ || Object.getPrototypeOf(MovieList)).call(this, props));
 
         _this.state = {
-            movies: []
+            loading: true
         };
 
         _this.addMovie = _this.addMovie.bind(_this);
@@ -128,7 +128,8 @@ var MovieList = function (_React$Component) {
 
             this.fetchMovies().then(function (movies) {
                 _this5.setState({
-                    movies: movies
+                    movies: movies,
+                    loading: false
                 });
             });
         }
@@ -141,7 +142,7 @@ var MovieList = function (_React$Component) {
                 'div',
                 null,
                 React.createElement(ModalMovie, { type: 'Add', action: this.addMovie }),
-                this.state.movies.map(function (movie) {
+                this.state.loading ? React.createElement(Spinner, null) : this.state.movies.map(function (movie) {
                     return React.createElement(
                         'div',
                         { key: 'wrapper' + movie._id },

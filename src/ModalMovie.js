@@ -16,7 +16,9 @@ class ModalMovie extends React.Component {
 
         this.action(movie);
         $(`#movie${ this.type }${ this.key || '' }`).modal('hide');
-        this.clearForm();
+        if (this.type === 'Add'){
+            this.clearForm();
+        }
     }
 
     buildMovie(){
