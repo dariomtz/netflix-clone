@@ -10,8 +10,8 @@ app.get('/signin', (req, res) => {
 app.get('/signup', (req, res) => {
 	res.sendFile(__dirname + '/public/signup.html');
 });
-app.get('/menupelis', (req, res) => {
-	res.sendFile(__dirname + '/public/menupelis.html');
+app.get('/movies', (req, res) => {
+	res.sendFile(__dirname + '/public/movies.html');
 });
 app.get('/movie/:id', (req, res) => {
 	res.sendFile(__dirname + '/public/movie.html');
