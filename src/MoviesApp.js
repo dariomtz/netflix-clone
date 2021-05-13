@@ -26,6 +26,7 @@ class MoviesApp extends React.Component{
     componentDidMount(){
         this.fetchMovies()
         .then(data => {
+            console.log(data);
             this.setState({
                 loading: false,
                 movies: data,
@@ -35,10 +36,12 @@ class MoviesApp extends React.Component{
 
     render(){
         return (
-            <div className="container text-white">
+            <div className="container text-white pb-5">
+                <h1>Movies</h1>
+                <hr/>
                 { this.state.loading ? 
                 <Spinner/>
-                : JSON.stringify(this.state.movies)}
+                : this.state.movies.map(movie => <MovieThumbnail key={movie._id} movie={movie} />) }
             </div>
         );
     }

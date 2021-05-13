@@ -46,6 +46,7 @@ var MoviesApp = function (_React$Component) {
             var _this2 = this;
 
             this.fetchMovies().then(function (data) {
+                console.log(data);
                 _this2.setState({
                     loading: false,
                     movies: data
@@ -57,8 +58,16 @@ var MoviesApp = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'div',
-                { className: 'container text-white' },
-                this.state.loading ? React.createElement(Spinner, null) : JSON.stringify(this.state.movies)
+                { className: 'container text-white pb-5' },
+                React.createElement(
+                    'h1',
+                    null,
+                    'Movies'
+                ),
+                React.createElement('hr', null),
+                this.state.loading ? React.createElement(Spinner, null) : this.state.movies.map(function (movie) {
+                    return React.createElement(MovieThumbnail, { key: movie._id, movie: movie });
+                })
             );
         }
     }]);
