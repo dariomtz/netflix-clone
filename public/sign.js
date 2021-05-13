@@ -6,6 +6,19 @@ function validateEmail(email) {
 	const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	return re.test(String(email).toLowerCase());
 }
+function showWheel(wheel, button, show) {
+	if(show){
+		wheel.classList.remove("d-node");
+		wheel.classList.add("d-flex");
+
+		button.classList.add("d-none");
+	}else {
+		wheel.classList.remove("d-flex");
+		wheel.classList.add("d-none");
+
+		button.classList.remove("d-none");
+	}
+}
 
 const nameF = document.getElementById("name-field");
 const lastNameF = document.getElementById("last-name-field");
@@ -13,13 +26,17 @@ const emailF = document.getElementById("email-field");
 const passF = document.getElementById("password-field");
 const rePassF = document.getElementById("re-password-field");
 const birthF = document.getElementById("birthday-field");
+const loadingWheel = document.getElementById("loading-wheel");
 
 if(window.location.pathname === "/signin"){
 	const signInbutton = document.getElementById("signin-button");
 	signInbutton.onclick = async (e) => {
+		showWheel(loadingWheel, signInbutton, true);
+
 		let email = emailF.value;
 		let password = passF.value;
 		let response = await signIn(email, password);
+		showWheel(loadingWheel, signInbutton, false);
 		if(response.token === ""){
 			alert("Wrong email or password");
 		}else sessionStorage.setItem("token", response.token);
@@ -29,6 +46,7 @@ if(window.location.pathname === "/signin"){
 }else{
 	const signUpButton = document.getElementById("signup-button");
 	signUpButton.addEventListener("click", async (e) => {
+		showWheel(loadingWheel, signUpButton, true);
 		let name = nameF.value;
 		let lastName = lastNameF.value;
 		let email = emailF.value;
@@ -84,20 +102,8 @@ if(window.location.pathname === "/signin"){
 			let response = await signIn(email, pass);
 			sessionStorage.setItem("token", response.token);
 		}
+		showWheel(loadingWheel, signUpButton, false);
 		checkToken();
-	})
-	let signupForm = document.getElementById('signup-form');
-	signupForm.addEventListener("change", (e) =>{
-		const invalid = document.querySelectorAll('input:invalid');
-		let areValid = true;
-		if(invalid.length > 0) areValid = false;
-		if(passF.value != rePassF.value) areValid = false;
-
-		if(areValid){
-			signUpButton.classList.remove("disabled");
-		}else { 
-			signUpButton.add("disabled");
-		}
 	})
 }
 
