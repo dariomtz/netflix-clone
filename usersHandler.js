@@ -3,6 +3,7 @@
 const Joi = require('joi');
 const { MongoClient, ObjectId } = require('mongodb');
 const shortId = require('shortid');
+const JWT = require("./jwt");
 
 //Temporal URI, when deploy change to deploy database and credentials
 const uri = 'mongodb+srv://gus-production:QtQX4awd0QYt9Lba@production.zwp4w.mongodb.net/netflix-clone?retryWrites=true&w=majority';
@@ -80,7 +81,7 @@ function usersHandler(){
     };
     this.createSession = async (userId) => {
         //TODO: IMPLEMENT JWT AUTH FOR SESION
-        let session = `${ shortId.generate() }/${ userId }`;
+        let session = `${ JWT.generate(userId) }`;
         let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
         await client.connect();
         let searchedSession = await client.db('netflix-clone').collection('sessions').findOne({session:session});
