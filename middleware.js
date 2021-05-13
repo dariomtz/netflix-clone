@@ -2,6 +2,7 @@
 
 const usersDH = require('./usersHandler');
 const moviesDH = require('./moviesHandler');
+const JWT = require("./jwt");
 
 function middleware(){
     this.API = async (req, res, next) => {
@@ -22,15 +23,21 @@ function middleware(){
 
     this.authentication = async (req, res, next) => {
         let session = req.header('auth-token');
-        if(await !usersDH.validSession(session)){
+        if(await usersDH.validSession(session)){
+            let id = await JWT.validate(session);
+            if(id){
+                req.userId = id;
+            
+                next();
+            }else{
+                res.status(403);
+                res.send('User not authenticated.');
+                return;
+            }
+        }else{
             res.status(403);
             res.send('User not authenticated.');
-            return;
         }
-    
-        req.userId = session.split('/').pop();
-    
-        next();
     }
 
     this.authorization = (req, res, next) => {
