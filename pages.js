@@ -16,8 +16,8 @@ app.get('/movies', (req, res) => {
 app.get('/movie/:id', (req, res) => {
 	res.sendFile(__dirname + '/public/movie.html');
 });
-app.get('/creadores', (req, res) => {
-	res.sendFile(__dirname + '/public/creadores.html');
+app.get('/admin', (req, res) => {
+	res.sendFile(__dirname + '/public/admin.html');
 });
 
 module.exports = app;
