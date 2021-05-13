@@ -73,11 +73,23 @@ class MovieList extends React.Component {
     deleteMovie(id){
         const movies = this.state.movies;
         let index = movies.findIndex(movie => id == movie._id);
-        movies.splice(index, 1);
 
-        this.setState({
-            movies: movies,
-        });
+        fetch(`/api/movies/${ id }`, {
+            method: 'DELETE',
+            headers: {
+                'api-key': sessionStorage.getItem('key'),
+                'auth-token': sessionStorage.getItem('token'),
+            },
+        })
+        .then(response => {
+            if(response.status == 204){
+                
+                movies.splice(index, 1);
+                this.setState({
+                    movies: movies,
+                });    
+            }
+        });            
     }
 
     componentDidMount(){
