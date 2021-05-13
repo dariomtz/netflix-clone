@@ -16,38 +16,56 @@
 </head>
 
 <body>
-  <!-- HEADER -->
-  <header>
-    <div class="netflixLogo">
-      <a id="logo" href="#home"><img
-          src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/logo.PNG?raw=true" alt="Logo Image"></a>
-    </div>
-    <nav class="main-nav">
-      <a href="#home">Home</a>
-      <a href="signup.html">Sign up</a>
-      <a href="signin.html">Sign in</a>
-      <a href="menupelis.html">Menu Peliculas</a>
-      <a href="detallepelis.html">Detalles pelicula</a>
-      <a href="creadores.html">Creadores</a>
-    </nav>
-  </header>
-  <!-- END OF HEADER -->
-  <h1>Pantalla de creadores</h1>
-  <p>Pantalla donde se puedan añadir, editar y borrar películas que aparecerán en el menú de películas.</p>
+      <!-- Barra navegación -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+        <img class="nav-link p-1 mr-3" style="width: 160px;" src="https://pngimg.com/uploads/netflix/netflix_PNG11.png" alt="hotwheels">
+  
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> 
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="landing.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="signup.html" >Sign up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="signin.html" >Sign in</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="menupelis.html">Menu peliculas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="detallepelis.html">Detalles pelicula</a>
+            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="creadores.html" >Creadores</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    <div id="creators-container"></div>
 
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    
+    <script src="key.js"></script>
+    <script src="checkLogin.js"></script>
 
-
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-  </script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-  </script>
+    <script src="ModalMovie.js"></script>
+    <script src="MovieInfo.js"></script>
+    <script src="MovieList.js"></script>
+    <script src="PlusSign.js"></script>
+    <script src="CreatorsApp.js"></script>
 </body>
 
 </html>

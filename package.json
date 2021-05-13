@@ -17,8 +17,11 @@
   },
   "homepage": "https://github.com/dariomtz/netflix-clone#readme",
   "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2",
     "express": "^4.17.1",
     "joi": "^17.4.0",
+    "mongodb": "^3.6.6",
     "shortid": "^2.2.16"
   }
 }

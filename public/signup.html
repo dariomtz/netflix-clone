@@ -1,51 +1,67 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="menupelis.css">
 
 <head>
-  <title>Sign un</title>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="icon"
-    href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/apple/155/overheated-face_1f975.png">
-
-
+  <title>Netflix</title>
+  <link rel="stylesheet" href="landing.css">
 </head>
 
 <body>
-  <!-- HEADER -->
-  <header>
-    <div class="netflixLogo">
-      <a id="logo" href="#home"><img
-          src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/logo.PNG?raw=true" alt="Logo Image"></a>
+  <div class="background-wrapper">
+    <img class="background"
+      src="https://assets.nflxext.com/ffe/siteui/vlv3/5039d301-b891-47b2-b755-553e5c874395/e792888a-2c70-4a78-9dfd-b8a26e767ae4/BR-en-20200210-popsignuptwoweeks-perspective_alpha_website_small.jpg"
+      srcset="https://assets.nflxext.com/ffe/siteui/vlv3/5039d301-b891-47b2-b755-553e5c874395/e792888a-2c70-4a78-9dfd-b8a26e767ae4/BR-en-20200210-popsignuptwoweeks-perspective_alpha_website_small.jpg 1000w, https://assets.nflxext.com/ffe/siteui/vlv3/5039d301-b891-47b2-b755-553e5c874395/e792888a-2c70-4a78-9dfd-b8a26e767ae4/BR-en-20200210-popsignuptwoweeks-perspective_alpha_website_medium.jpg 1500w, https://assets.nflxext.com/ffe/siteui/vlv3/5039d301-b891-47b2-b755-553e5c874395/e792888a-2c70-4a78-9dfd-b8a26e767ae4/BR-en-20200210-popsignuptwoweeks-perspective_alpha_website_large.jpg 1800w"
+      alt>
+  </div>
+  <div id="app">
+    <div id="header">
+      <a href="/">
+        <img id="logo" src="https://logodownload.org/wp-content/uploads/2014/10/netflix-logo-5.png">
+      </a>
     </div>
-    <nav class="main-nav">
-      <a href="#home">Home</a>
-      <a href="signup.html">Sign up</a>
-      <a href="signin.html">Sign in</a>
-      <a href="menupelis.html">Menu Peliculas</a>
-      <a href="detallepelis.html">Detalles pelicula</a>
-      <a href="creadores.html">Creadores</a>
-    </nav>
-  </header>
-  <!-- END OF HEADER -->
-  <h1>Pantalla de sign-up</h1>
-  <p>Pantalla donde el usuario crea una cuenta ingresando correo, password, confirmación, nombre, etc.</p>
+    <div id="container">
+        <div class="label-container">
+          <h2 id="sign-in-text">Sign up</h1>
+        </div>
+        <!--name-->
+        <div class="box-container" id="name-container">
+          <input class="field" id="name-field" name="name" type="text" placeholder="Name" required>
+        </div>
+        <div class="inputError" id="email-inputError"></div>
+        <!--Last name-->
+        <div class="box-container" id="last-name-container">
+          <input class="field" id="last-name-field" name="last-name" type="text" placeholder="Last Name" required>
+        </div>
+        <div class="inputError" id="email-inputError"></div>
+        <!--email-->
+        <div class="box-container" id="email-container">
+          <input class="field" id="email-field" name="email" type="email" placeholder="Email" required>
+        </div>
+        <div class="inputError" id="email-inputError"></div>
+        <!--password-->
+        <div class="box-container" id="password-container">
+          <input class="field" id="password-field" name="password" type="password" placeholder="Password" required>
+        </div>
+        <div class="inputError" id="email-inputError"></div>
+        <!--re-password-->
+        <div class="box-container" id="re-password-container">
+          <input class="field" id="re-password-field" name="re-password" type="password" placeholder="Repeat password" required>
+        </div>
+        <div class="inputError" id="email-inputError"></div>
+        <!--Birthday-->
+        <div class="box-container" id="birthday-container">
+          <input class="field" id="birthday-field" name="birthday" type="date" placeholder="Repeat password" required>
+        </div>
+        <div class="inputError" id="email-inputError"></div>
 
+        <div class="box-container" id="register-button-container">
+          <input id="register-button" type="button" value="Sign Up">
+        </div>
 
-
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-  </script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-  </script>
+        <div class="sign-up">
+          <span id="sign-up">Already have an acount?</span>
+          <a class="sign-up-link" id="sign-up-link" href="/signin">Sign in now.</a>
+        </div>
+    </div>
 </body>
-
 </html>
