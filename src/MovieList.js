@@ -27,33 +27,69 @@ class MovieList extends React.Component {
 
     addMovie(movie){
         const movies = this.state.movies;
-        movie._id = movies.length + 1;
+        fetch('/api/movies', {
+            method: 'POST',
+            headers: {
+                'api-key': sessionStorage.getItem('key'),
+                'auth-token': sessionStorage.getItem('token'),
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(movie),
+        })
+        .then(response => response.json())
+        .then(data =>{
+            movies.push(data);
 
-        movies.push(movie);
-
-        this.setState({
-            movies: movies,
+            this.setState({
+                movies: movies,
+            });
         });
     }
 
     editMovie(movie){
         const movies = this.state.movies;
-        let index = movies.findIndex(m => movie._id == m.id);
-        movies[index] = movie;
+        let id = movie._id;
+        delete movie._id;
+        let index = movies.findIndex(m => id == m._id);
+        fetch(`/api/movies/${ id }`, {
+            method: 'PUT',
+            headers: {
+                'api-key': sessionStorage.getItem('key'),
+                'auth-token': sessionStorage.getItem('token'),
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(movie),
+        })
+        .then(response => response.json())
+        .then(data => {
+            movies[index] = data;
 
-        this.setState({
-            movies: movies,
+            this.setState({
+                movies: movies,
+            });
         });
     }
 
     deleteMovie(id){
         const movies = this.state.movies;
         let index = movies.findIndex(movie => id == movie._id);
-        movies.splice(index, 1);
 
-        this.setState({
-            movies: movies,
-        });
+        fetch(`/api/movies/${ id }`, {
+            method: 'DELETE',
+            headers: {
+                'api-key': sessionStorage.getItem('key'),
+                'auth-token': sessionStorage.getItem('token'),
+            },
+        })
+        .then(response => {
+            if(response.status == 204){
+                
+                movies.splice(index, 1);
+                this.setState({
+                    movies: movies,
+                });    
+            }
+        });            
     }
 
     componentDidMount(){

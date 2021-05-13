@@ -45,48 +45,89 @@ var MovieList = function (_React$Component) {
     }, {
         key: 'addMovie',
         value: function addMovie(movie) {
+            var _this2 = this;
+
             var movies = this.state.movies;
-            movie._id = movies.length + 1;
+            fetch('/api/movies', {
+                method: 'POST',
+                headers: {
+                    'api-key': sessionStorage.getItem('key'),
+                    'auth-token': sessionStorage.getItem('token'),
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(movie)
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                movies.push(data);
 
-            movies.push(movie);
-
-            this.setState({
-                movies: movies
+                _this2.setState({
+                    movies: movies
+                });
             });
         }
     }, {
         key: 'editMovie',
         value: function editMovie(movie) {
-            var movies = this.state.movies;
-            var index = movies.findIndex(function (m) {
-                return movie._id == m.id;
-            });
-            movies[index] = movie;
+            var _this3 = this;
 
-            this.setState({
-                movies: movies
+            var movies = this.state.movies;
+            var id = movie._id;
+            delete movie._id;
+            var index = movies.findIndex(function (m) {
+                return id == m._id;
+            });
+            fetch('/api/movies/' + id, {
+                method: 'PUT',
+                headers: {
+                    'api-key': sessionStorage.getItem('key'),
+                    'auth-token': sessionStorage.getItem('token'),
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(movie)
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                movies[index] = data;
+
+                _this3.setState({
+                    movies: movies
+                });
             });
         }
     }, {
         key: 'deleteMovie',
         value: function deleteMovie(id) {
+            var _this4 = this;
+
             var movies = this.state.movies;
             var index = movies.findIndex(function (movie) {
                 return id == movie._id;
             });
-            movies.splice(index, 1);
 
-            this.setState({
-                movies: movies
+            fetch('/api/movies/' + id, {
+                method: 'DELETE',
+                headers: {
+                    'api-key': sessionStorage.getItem('key'),
+                    'auth-token': sessionStorage.getItem('token')
+                }
+            }).then(function (response) {
+                if (response.status == 204) {
+
+                    movies.splice(index, 1);
+                    _this4.setState({
+                        movies: movies
+                    });
+                }
             });
         }
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this2 = this;
+            var _this5 = this;
 
             this.fetchMovies().then(function (movies) {
-                _this2.setState({
+                _this5.setState({
                     movies: movies
                 });
             });
@@ -94,7 +135,7 @@ var MovieList = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this6 = this;
 
             return React.createElement(
                 'div',
@@ -104,8 +145,8 @@ var MovieList = function (_React$Component) {
                     return React.createElement(
                         'div',
                         { key: 'wrapper' + movie._id },
-                        React.createElement(MovieInfo, { key: movie._id, id: movie._id, movie: movie, 'delete': _this3.deleteMovie }),
-                        React.createElement(ModalMovie, { key: 'modal' + movie._id, id: movie._id, type: 'Edit', action: _this3.editMovie, movie: movie })
+                        React.createElement(MovieInfo, { key: movie._id, id: movie._id, movie: movie, 'delete': _this6.deleteMovie }),
+                        React.createElement(ModalMovie, { key: 'modal' + movie._id, id: movie._id, type: 'Edit', action: _this6.editMovie, movie: movie })
                     );
                 })
             );
