@@ -4,7 +4,7 @@ class MovieList extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            movies: [],
+            loading: true,
         };
 
         this.addMovie = this.addMovie.bind(this);
@@ -96,6 +96,7 @@ class MovieList extends React.Component {
         this.fetchMovies().then(movies => {
             this.setState({
                 movies: movies,
+                loading: false,
             });
         });   
     }
@@ -104,7 +105,11 @@ class MovieList extends React.Component {
         return (
             <div>
                 <ModalMovie type="Add" action={ this.addMovie }/>
-                { this.state.movies.map(movie => 
+
+                { this.state.loading ?
+                 <Spinner/>
+                 :
+                 this.state.movies.map(movie => 
                     <div key={`wrapper${movie._id}`}>
                         <MovieInfo key={movie._id} id={movie._id} movie={movie} delete={ this.deleteMovie }/>
                         <ModalMovie key={`modal${movie._id}`} id={movie._id} type="Edit" action={ this.editMovie } movie={movie}/>
