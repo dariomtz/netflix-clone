@@ -14,9 +14,25 @@
           <img src="https://pngimg.com/uploads/netflix/netflix_PNG11.png" class="d-inline-block align-top" height="50" alt="">
         </a>
     </nav>
-    <div class="container-fluid bg-dark p-5 text-white">
-      <h1>Title</h1>
-      <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</p>
+
+    <div id="container" class="container-fluid bg-dark p-5 text-white">
+      <div id="spinner" class="d-flex justify-content-center">
+        <div class="spinner-border text-light" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div id="detail" class="d-none container">
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <img id="image" class="img-fluid rounded-lg shadow-lg mb-5">
+          </div>
+          <div class="col-lg-6 col-12 px-5">
+            <h1 id="title"></h1>
+            <p id="description"></p>
+            <a id="play" class="btn btn-danger" target="_blank">Play</a>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -26,6 +42,7 @@
     
     <script src="/key.js"></script>
     <script src="/checkLogin.js"></script>
+    <script src="/movie.js"></script>
 </body>
 
 </html>
