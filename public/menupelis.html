@@ -1,72 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<link rel="stylesheet" href="menupelis.css">
-<link rel="stylesheet" href="loader.css">
-
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Netflix</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
-  <script defer src="key.js"></script>
-  <script defer src="menupelis.js"></script>
-  <script defer src="data-handler.js"></script>
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Netflix_icon.svg/1200px-Netflix_icon.svg.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 </head>
+
 <body>
-  <div class="wrapper">
-
-    <!-- HEADER -->
-  <header>
-    <div class="netflixLogo">
-      <a id="logo" href="#home"><img
-          src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/logo.PNG?raw=true" alt="Logo Image"></a>
-    </div>
-    <nav class="main-nav">
-      <a href="#home">Home</a>
-      <a href="signup.html">Sign up</a>
-      <a href="signin.html">Sign in</a>
-      <a href="menupelis.html">Menu Peliculas</a>
-      <a href="detallepelis.html">Detalles pelicula</a>
-      <a href="creadores.html">Creadores</a>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand mb-2" href="/menupelis">
+          <img src="https://pngimg.com/uploads/netflix/netflix_PNG11.png" class="d-inline-block align-top" height="50" alt="">
+        </a>
     </nav>
-  </header>
-  <!-- END OF HEADER -->
+    <div id="container-menu"></div>
 
-
-
-    <!-- MAIN CONTAINER -->
-    <section class="main-container">
-       <div class="location" id="home">
-          <h1 id="home">New Movies</h1>
-          <!-- Loading message -->
-          <div class="lds-spinner" id="loading"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-          <div class="box" id="carousel">
-           <!-- <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt=""></a>
-            <a href="detallepelis.html"><img src="https://img.nbc.com/sites/nbcunbc/files/images/2021/2/11/NewAmsterdam_S3-Logo-1920x1080.jpg" alt=""></a>
-            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p3.PNG?raw=true" alt=""></a>
-            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p4.PNG?raw=true" alt=""></a>
-            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p5.PNG?raw=true" alt=""></a>
-            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p6.PNG?raw=true" alt=""></a>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
     
-            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p7.PNG?raw=true" alt=""></a>
-            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p8.PNG?raw=true" alt=""></a>
-            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p9.PNG?raw=true" alt=""></a>
-            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p10.PNG?raw=true" alt=""></a>
-            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p11.PNG?raw=true" alt=""></a>
-            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p12.PNG?raw=true" alt=""></a>  -->
-          </div>
-      </div>
-    <!-- END OF MAIN CONTAINER -->
- 
-    
-
-    <!-- FOOTER -->
-    <footer>
-      <p>DASW</p>
-      <p>Equipo alfa maravilla 2021</p>
-    </footer>
-  </div>
+    <script src="/key.js"></script>
+    <script src="/checkLogin.js"></script>
 </body>
+
 </html>
