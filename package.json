@@ -4,7 +4,8 @@
   "description": "A website that looks like netflix but it is not",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
