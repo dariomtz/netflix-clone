@@ -29,21 +29,39 @@ function moviesHandler(){
         return this.movieSchema.validate(movie);
     };
 
-    this.getMovies = async (detail) => {
+    this.getMovies = async (detail, page, query) => {
         let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
         await client.connect();
         let movies = await client.db('netflix-clone').collection('movies').find().toArray();
         await client.close();
-        if (detail){
-            return movies;
+        if(query){
+            movies = movies.filter((value) =>{
+                if(value.title.toLowerCase().includes(query.toLowerCase()) || value.description.toLowerCase().includes(query.toLowerCase()))return value;
+            });
         }
-        return movies.map((value)=>{
+
+        if(!page){
+            nextPage = null;
+        }else{
+            nextPage = (page*10)+10 < movies.length ? page+1:page;
+            movies = movies.splice(page*10, (page*10)+10);
+        }
+        if (detail){
             return {
-                thumbnail: value.thumbnail,
-                _id: value._id
+                next_page: nextPage,
+                movies: movies
             };
-        });
-    };
+        }
+        return {
+            next_page: nextPage,
+            movies: movies.map((value)=>{
+                return {
+                    thumbnail: value.thumbnail,
+                    _id: value._id
+                };
+            })
+        };
+    }
 
     this.getMovie = async (id) => {
         let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
