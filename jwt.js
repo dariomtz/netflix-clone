@@ -1,11 +1,13 @@
 const jwt = require('jsonwebtoken');
 
+const secret = `${process.env.SECRET}`;
+
 function generate(id) {
-	return jwt.sign({id:id},proscess.env.SECRET);
+	return jwt.sign({id:id},secret);
 }
 
 async function validate(token) {
-	let id = await jwt.verify(token, proscess.env.SECRET);
+	let id = await jwt.verify(token, secret);
 	return id.id;
 }
 
