@@ -3,7 +3,7 @@
 const Joi = require('joi');
 const { MongoClient, ObjectId } = require('mongodb');
 //Temporal URI, when deploy change to deploy database and credentials
-const uri = 'mongodb+srv://gus-production:QtQX4awd0QYt9Lba@production.zwp4w.mongodb.net/netflix-clone?retryWrites=true&w=majority';
+const uri = `mongodb+srv://${process.env.DATABASE}:${process.env.PASS}@production.zwp4w.mongodb.net/netflix-clone?retryWrites=true&w=majority`;
 
 function moviesHandler(){
     this.lastMovieId = 0;
