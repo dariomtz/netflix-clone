@@ -6,7 +6,7 @@ const shortId = require('shortid');
 const JWT = require("./jwt");
 
 //Temporal URI, when deploy change to deploy database and credentials
-const uri = 'mongodb+srv://gus-production:QtQX4awd0QYt9Lba@production.zwp4w.mongodb.net/netflix-clone?retryWrites=true&w=majority';
+const uri = process.env.DATABASE;
 
 function usersHandler(){
     this.userSchema = Joi.object({
