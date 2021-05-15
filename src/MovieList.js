@@ -8,8 +8,11 @@ class MovieList extends React.Component {
             editing: new Set(),
             deleting: new Set(),
             next_page: 0,
+            movies:[],
         };        
 
+        this.fetchMovies = this.fetchMovies.bind(this);
+        this.fetchNextPage = this.fetchNextPage.bind(this);
         this.addMovie = this.addMovie.bind(this);
         this.editMovie = this.editMovie.bind(this);
         this.deleteMovie = this.deleteMovie.bind(this);
@@ -23,7 +26,7 @@ class MovieList extends React.Component {
 
     fetchMovies(){
         return new Promise((resolve) => {
-            fetch('/api/movies?detail=true', {
+            fetch(`/api/movies?detail=true&page=${ this.state.next_page }`, {
                 headers: {
                     'api-key': sessionStorage.getItem('key'),
                     'auth-token': sessionStorage.getItem('token'),
@@ -32,6 +35,21 @@ class MovieList extends React.Component {
             .then(response => response.json())
             .then(data => resolve(data));
         });
+    }
+
+    fetchNextPage(){
+        this.updateState({
+            loading: true,
+        });
+
+        this.fetchMovies()
+        .then(data => {
+            this.updateState({
+                movies: this.state.movies.concat(data.movies),
+                next_page: data.next_page,
+                loading: false,
+            })
+        })
     }
 
     addMovie(movie){
@@ -111,13 +129,7 @@ class MovieList extends React.Component {
     }
 
     componentDidMount(){
-        this.fetchMovies().then(response => {
-            this.updateState({
-                movies: response.movies,
-                next_page: response.next_page,
-                loading: false,
-            });
-        });   
+        this.fetchNextPage();
     }
 
     render(){
@@ -125,10 +137,7 @@ class MovieList extends React.Component {
             <div>
                 <ModalMovie type="Add" action={ this.addMovie }/>
 
-                { this.state.loading ?
-                 <Spinner/>
-                 :
-                 this.state.movies.map(movie => 
+                { this.state.movies.map(movie => 
                     <div key={`wrapper${movie._id}`}>
                         <MovieInfo key={movie._id}
                                     movie={ movie }
@@ -138,6 +147,19 @@ class MovieList extends React.Component {
                         <ModalMovie key={`modal${movie._id}`} id={movie._id} type="Edit" action={ this.editMovie } movie={movie}/>
                     </div>
                 )}
+
+                { this.state.loading ? <Spinner/> : '' }
+
+                {
+                    this.state.next_page !== null && !this.state.loading ?
+                    <div className="container-fluid pt-5">
+                        <button className="btn btn-light" onClick={ this.fetchNextPage }>
+                            Load more
+                        </button>
+                    </div>
+                    : ''
+                }
+
             </div>
         );
     }

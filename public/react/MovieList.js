@@ -20,9 +20,12 @@ var MovieList = function (_React$Component) {
             loading: true,
             editing: new Set(),
             deleting: new Set(),
-            next_page: 0
+            next_page: 0,
+            movies: []
         };
 
+        _this.fetchMovies = _this.fetchMovies.bind(_this);
+        _this.fetchNextPage = _this.fetchNextPage.bind(_this);
         _this.addMovie = _this.addMovie.bind(_this);
         _this.editMovie = _this.editMovie.bind(_this);
         _this.deleteMovie = _this.deleteMovie.bind(_this);
@@ -39,8 +42,10 @@ var MovieList = function (_React$Component) {
     }, {
         key: 'fetchMovies',
         value: function fetchMovies() {
+            var _this2 = this;
+
             return new Promise(function (resolve) {
-                fetch('/api/movies?detail=true', {
+                fetch('/api/movies?detail=true&page=' + _this2.state.next_page, {
                     headers: {
                         'api-key': sessionStorage.getItem('key'),
                         'auth-token': sessionStorage.getItem('token')
@@ -53,9 +58,26 @@ var MovieList = function (_React$Component) {
             });
         }
     }, {
+        key: 'fetchNextPage',
+        value: function fetchNextPage() {
+            var _this3 = this;
+
+            this.updateState({
+                loading: true
+            });
+
+            this.fetchMovies().then(function (data) {
+                _this3.updateState({
+                    movies: _this3.state.movies.concat(data.movies),
+                    next_page: data.next_page,
+                    loading: false
+                });
+            });
+        }
+    }, {
         key: 'addMovie',
         value: function addMovie(movie) {
-            var _this2 = this;
+            var _this4 = this;
 
             var movies = this.state.movies;
             fetch('/api/movies', {
@@ -71,7 +93,7 @@ var MovieList = function (_React$Component) {
             }).then(function (data) {
                 movies.push(data);
 
-                _this2.updateState({
+                _this4.updateState({
                     movies: movies
                 });
             });
@@ -79,7 +101,7 @@ var MovieList = function (_React$Component) {
     }, {
         key: 'editMovie',
         value: function editMovie(movie) {
-            var _this3 = this;
+            var _this5 = this;
 
             this.state.editing.add(movie._id);
             this.setState(this.state);
@@ -103,9 +125,9 @@ var MovieList = function (_React$Component) {
                 return response.json();
             }).then(function (data) {
                 movies[index] = data;
-                _this3.state.editing.delete(data._id);
+                _this5.state.editing.delete(data._id);
 
-                _this3.updateState({
+                _this5.updateState({
                     movies: movies
                 });
             });
@@ -113,7 +135,7 @@ var MovieList = function (_React$Component) {
     }, {
         key: 'deleteMovie',
         value: function deleteMovie(id) {
-            var _this4 = this;
+            var _this6 = this;
 
             this.state.deleting.add(id);
             this.setState(this.state);
@@ -133,8 +155,8 @@ var MovieList = function (_React$Component) {
                 if (response.status == 204) {
 
                     movies.splice(index, 1);
-                    _this4.state.deleting.delete(id);
-                    _this4.updateState({
+                    _this6.state.deleting.delete(id);
+                    _this6.updateState({
                         movies: movies
                     });
                 }
@@ -143,37 +165,39 @@ var MovieList = function (_React$Component) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this5 = this;
-
-            this.fetchMovies().then(function (response) {
-                _this5.updateState({
-                    movies: response.movies,
-                    next_page: response.next_page,
-                    loading: false
-                });
-            });
+            this.fetchNextPage();
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this6 = this;
+            var _this7 = this;
 
             return React.createElement(
                 'div',
                 null,
                 React.createElement(ModalMovie, { type: 'Add', action: this.addMovie }),
-                this.state.loading ? React.createElement(Spinner, null) : this.state.movies.map(function (movie) {
+                this.state.movies.map(function (movie) {
                     return React.createElement(
                         'div',
                         { key: 'wrapper' + movie._id },
                         React.createElement(MovieInfo, { key: movie._id,
                             movie: movie,
-                            'delete': _this6.deleteMovie,
-                            deleting: _this6.state.deleting.has(movie._id),
-                            editing: _this6.state.editing.has(movie._id) }),
-                        React.createElement(ModalMovie, { key: 'modal' + movie._id, id: movie._id, type: 'Edit', action: _this6.editMovie, movie: movie })
+                            'delete': _this7.deleteMovie,
+                            deleting: _this7.state.deleting.has(movie._id),
+                            editing: _this7.state.editing.has(movie._id) }),
+                        React.createElement(ModalMovie, { key: 'modal' + movie._id, id: movie._id, type: 'Edit', action: _this7.editMovie, movie: movie })
                     );
-                })
+                }),
+                this.state.loading ? React.createElement(Spinner, null) : '',
+                this.state.next_page !== null && !this.state.loading ? React.createElement(
+                    'div',
+                    { className: 'container-fluid pt-5' },
+                    React.createElement(
+                        'button',
+                        { className: 'btn btn-light', onClick: this.fetchNextPage },
+                        'Load more'
+                    )
+                ) : ''
             );
         }
     }]);

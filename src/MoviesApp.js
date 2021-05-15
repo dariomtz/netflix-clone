@@ -65,11 +65,9 @@ class MoviesApp extends React.Component{
                 { this.state.loadingMore ? <Spinner/> : ''}
 
                 {
-                    this.state.next_page !== null ?
+                    this.state.next_page !== null && !this.state.loadingMore ?
                     <div className="container-fluid pt-5">
-                        <button className="btn btn-light" 
-                                disabled={this.state.loadingMore ? true : false}
-                                onClick={ this.fetchNextPage }>
+                        <button className="btn btn-light" onClick={ this.fetchNextPage }>
                             Load more
                         </button>
                     </div>

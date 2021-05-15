@@ -93,14 +93,12 @@ var MoviesApp = function (_React$Component) {
                     return React.createElement(MovieThumbnail, { key: movie._id, movie: movie });
                 }),
                 this.state.loadingMore ? React.createElement(Spinner, null) : '',
-                this.state.next_page !== null ? React.createElement(
+                this.state.next_page !== null && !this.state.loadingMore ? React.createElement(
                     'div',
                     { className: 'container-fluid pt-5' },
                     React.createElement(
                         'button',
-                        { className: 'btn btn-light',
-                            disabled: this.state.loadingMore ? true : false,
-                            onClick: this.fetchNextPage },
+                        { className: 'btn btn-light', onClick: this.fetchNextPage },
                         'Load more'
                     )
                 ) : ''
