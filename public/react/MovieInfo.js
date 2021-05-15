@@ -16,7 +16,6 @@ var MovieInfo = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (MovieInfo.__proto__ || Object.getPrototypeOf(MovieInfo)).call(this, props));
 
-        _this.movie = _this.props.movie;
         _this.delete = _this.delete.bind(_this);
         return _this;
     }
@@ -24,7 +23,7 @@ var MovieInfo = function (_React$Component) {
     _createClass(MovieInfo, [{
         key: "delete",
         value: function _delete() {
-            this.props.delete(this.movie._id);
+            this.props.delete(this.props.movie._id);
         }
     }, {
         key: "render",
@@ -32,9 +31,9 @@ var MovieInfo = function (_React$Component) {
             if (this.props.editing) {
                 return React.createElement(
                     "div",
-                    { className: "p-3 my-1" },
+                    { className: "text-white text-center p-5 my-1" },
                     React.createElement(
-                        "p",
+                        "h4",
                         null,
                         "Editing"
                     ),
@@ -45,9 +44,9 @@ var MovieInfo = function (_React$Component) {
             if (this.props.deleting) {
                 return React.createElement(
                     "div",
-                    { className: "p-3 my-1" },
+                    { className: "text-white text-center p-5 my-1" },
                     React.createElement(
-                        "p",
+                        "h4",
                         null,
                         "Deleting"
                     ),
@@ -61,12 +60,12 @@ var MovieInfo = function (_React$Component) {
                 React.createElement(
                     "h3",
                     null,
-                    this.movie.title
+                    this.props.movie.title
                 ),
                 React.createElement(
                     "p",
                     null,
-                    this.movie.description
+                    this.props.movie.description
                 ),
                 React.createElement(
                     "p",
@@ -74,8 +73,8 @@ var MovieInfo = function (_React$Component) {
                     "Image:",
                     React.createElement(
                         "a",
-                        { href: this.movie.image, className: "btn btn-link", target: "_blank" },
-                        this.movie.image
+                        { href: this.props.movie.image, className: "btn btn-link", target: "_blank" },
+                        this.props.movie.image
                     )
                 ),
                 React.createElement(
@@ -84,8 +83,8 @@ var MovieInfo = function (_React$Component) {
                     "Trailer:",
                     React.createElement(
                         "a",
-                        { href: this.movie.trailer, className: "btn btn-link", target: "_blank" },
-                        this.movie.trailer
+                        { href: this.props.movie.trailer, className: "btn btn-link", target: "_blank" },
+                        this.props.movie.trailer
                     )
                 ),
                 React.createElement(
@@ -94,8 +93,8 @@ var MovieInfo = function (_React$Component) {
                     "Thumbnail:",
                     React.createElement(
                         "a",
-                        { href: this.movie.thumbnail, className: "btn btn-link", target: "_blank" },
-                        this.movie.thumbnail
+                        { href: this.props.movie.thumbnail, className: "btn btn-link", target: "_blank" },
+                        this.props.movie.thumbnail
                     )
                 ),
                 React.createElement(
@@ -103,18 +102,18 @@ var MovieInfo = function (_React$Component) {
                     null,
                     React.createElement(
                         "button",
-                        { className: "btn btn-warning mr-2", "data-toggle": "modal", "data-target": "#movieEdit" + this.movie._id },
+                        { className: "btn btn-warning mr-2", "data-toggle": "modal", "data-target": "#movieEdit" + this.props.movie._id },
                         "Edit"
                     ),
                     React.createElement(
                         "button",
-                        { className: "btn btn-danger ", "data-toggle": "modal", "data-target": "#confirmDelete" + this.movie._id },
+                        { className: "btn btn-danger ", "data-toggle": "modal", "data-target": "#confirmDelete" + this.props.movie._id },
                         "Delete"
                     )
                 ),
                 React.createElement(
                     "div",
-                    { className: "modal fade", id: "confirmDelete" + this.id, tabIndex: "-1", "aria-labelledby": "confirmDeleteLabel" + this.id, "aria-hidden": "true" },
+                    { className: "modal fade", id: "confirmDelete" + this.props.movie._id, tabIndex: "-1", "aria-labelledby": "confirmDeleteLabel" + this.props.movie._id, "aria-hidden": "true" },
                     React.createElement(
                         "div",
                         { className: "modal-dialog" },
@@ -126,7 +125,7 @@ var MovieInfo = function (_React$Component) {
                                 { className: "modal-header" },
                                 React.createElement(
                                     "h5",
-                                    { className: "modal-title", id: "confirmDeleteLabel" + this.id },
+                                    { className: "modal-title", id: "confirmDeleteLabel" + this.props.movie._id },
                                     "Are you sure you want to delete this?"
                                 ),
                                 React.createElement(
@@ -149,7 +148,7 @@ var MovieInfo = function (_React$Component) {
                                     React.createElement(
                                         "strong",
                                         null,
-                                        this.movie.title
+                                        this.props.movie.title
                                     ),
                                     " will be deleted."
                                 ),

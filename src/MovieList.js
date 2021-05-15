@@ -74,9 +74,8 @@ class MovieList extends React.Component {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             movies[index] = data;
-            this.state.editing.delete(movie._id);
+            this.state.editing.delete(data._id);
 
             this.updateState({
                 movies: movies,
@@ -85,7 +84,7 @@ class MovieList extends React.Component {
     }
 
     deleteMovie(id){
-        this.state.deleting.add(movie._id);
+        this.state.deleting.add(id);
         this.setState(this.state);
 
         const movies = this.state.movies;
@@ -102,7 +101,7 @@ class MovieList extends React.Component {
             if(response.status == 204){
                 
                 movies.splice(index, 1);
-                this.state.deleting.remove(movie._id);
+                this.state.deleting.delete(id);
                 this.updateState({
                     movies: movies,
                 });    
@@ -120,7 +119,6 @@ class MovieList extends React.Component {
     }
 
     render(){
-        console.log(this.state);
         return (
             <div>
                 <ModalMovie type="Add" action={ this.addMovie }/>
@@ -131,7 +129,7 @@ class MovieList extends React.Component {
                  this.state.movies.map(movie => 
                     <div key={`wrapper${movie._id}`}>
                         <MovieInfo key={movie._id}
-                                    movie={movie}
+                                    movie={ movie }
                                     delete={ this.deleteMovie } 
                                     deleting={ this.state.deleting.has(movie._id) } 
                                     editing={ this.state.editing.has(movie._id) }/>

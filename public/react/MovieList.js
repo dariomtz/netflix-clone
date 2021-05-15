@@ -101,9 +101,8 @@ var MovieList = function (_React$Component) {
             }).then(function (response) {
                 return response.json();
             }).then(function (data) {
-                console.log(data);
                 movies[index] = data;
-                _this3.state.editing.delete(movie._id);
+                _this3.state.editing.delete(data._id);
 
                 _this3.updateState({
                     movies: movies
@@ -115,7 +114,7 @@ var MovieList = function (_React$Component) {
         value: function deleteMovie(id) {
             var _this4 = this;
 
-            this.state.deleting.add(movie._id);
+            this.state.deleting.add(id);
             this.setState(this.state);
 
             var movies = this.state.movies;
@@ -133,7 +132,7 @@ var MovieList = function (_React$Component) {
                 if (response.status == 204) {
 
                     movies.splice(index, 1);
-                    _this4.state.deleting.remove(movie._id);
+                    _this4.state.deleting.delete(id);
                     _this4.updateState({
                         movies: movies
                     });
@@ -157,7 +156,6 @@ var MovieList = function (_React$Component) {
         value: function render() {
             var _this6 = this;
 
-            console.log(this.state);
             return React.createElement(
                 'div',
                 null,
