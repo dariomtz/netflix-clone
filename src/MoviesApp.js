@@ -115,7 +115,13 @@ class MoviesApp extends React.Component{
                 </div>
                 <hr/>
 
-                { this.state.movies.map(movie => <MovieThumbnail key={movie._id} movie={movie} />) }
+                {   
+                    this.state.movies.length == 0 && !this.state.loadingMore
+                    ?
+                    <h5 className="text-white">No movies match the search.</h5>
+                    :
+                    this.state.movies.map(movie => <MovieThumbnail key={movie._id} movie={movie} />) 
+                }
 
                 { this.state.loadingMore ? <Spinner/> : ''}
 

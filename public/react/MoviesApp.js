@@ -168,7 +168,11 @@ var MoviesApp = function (_React$Component) {
                     )
                 ),
                 React.createElement('hr', null),
-                this.state.movies.map(function (movie) {
+                this.state.movies.length == 0 && !this.state.loadingMore ? React.createElement(
+                    'h5',
+                    { className: 'text-white' },
+                    'No movies match the search.'
+                ) : this.state.movies.map(function (movie) {
                     return React.createElement(MovieThumbnail, { key: movie._id, movie: movie });
                 }),
                 this.state.loadingMore ? React.createElement(Spinner, null) : '',

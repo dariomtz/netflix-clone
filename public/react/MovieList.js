@@ -21,23 +21,28 @@ var MovieList = function (_React$Component) {
             editing: new Set(),
             deleting: new Set(),
             next_page: 0,
-            movies: []
+            movies: [],
+            search: ''
         };
+
+        _this.requestNum = 0;
 
         _this.fetchMovies = _this.fetchMovies.bind(_this);
         _this.fetchNextPage = _this.fetchNextPage.bind(_this);
         _this.addMovie = _this.addMovie.bind(_this);
         _this.editMovie = _this.editMovie.bind(_this);
         _this.deleteMovie = _this.deleteMovie.bind(_this);
+        _this.searchMovies = _this.searchMovies.bind(_this);
+        _this.cleanSearch = _this.cleanSearch.bind(_this);
         return _this;
     }
 
     _createClass(MovieList, [{
         key: 'updateState',
-        value: function updateState(newState) {
+        value: function updateState(newState, callback) {
             var state = Object.assign({}, this.state);
             Object.assign(state, newState);
-            this.setState(state);
+            this.setState(state, callback);
         }
     }, {
         key: 'fetchMovies',
@@ -45,7 +50,7 @@ var MovieList = function (_React$Component) {
             var _this2 = this;
 
             return new Promise(function (resolve) {
-                fetch('/api/movies?detail=true&page=' + _this2.state.next_page, {
+                fetch('/api/movies?detail=true&page=' + _this2.state.next_page + '&query=' + _this2.state.search, {
                     headers: {
                         'api-key': sessionStorage.getItem('key'),
                         'auth-token': sessionStorage.getItem('token')
@@ -59,7 +64,7 @@ var MovieList = function (_React$Component) {
         }
     }, {
         key: 'fetchNextPage',
-        value: function fetchNextPage() {
+        value: function fetchNextPage(requestNum) {
             var _this3 = this;
 
             this.updateState({
@@ -67,6 +72,8 @@ var MovieList = function (_React$Component) {
             });
 
             this.fetchMovies().then(function (data) {
+                if (_this3.requestNum != requestNum) return;
+
                 _this3.updateState({
                     movies: _this3.state.movies.concat(data.movies),
                     next_page: data.next_page,
@@ -75,9 +82,31 @@ var MovieList = function (_React$Component) {
             });
         }
     }, {
+        key: 'searchMovies',
+        value: function searchMovies(event) {
+            var _this4 = this;
+
+            this.updateState({
+                search: event.target.value,
+                next_page: 0,
+                movies: []
+            }, function () {
+                _this4.fetchNextPage(++_this4.requestNum);
+            });
+        }
+    }, {
+        key: 'cleanSearch',
+        value: function cleanSearch() {
+            this.searchMovies({
+                target: {
+                    value: ''
+                }
+            });
+        }
+    }, {
         key: 'addMovie',
         value: function addMovie(movie) {
-            var _this4 = this;
+            var _this5 = this;
 
             var movies = this.state.movies;
             fetch('/api/movies', {
@@ -93,7 +122,7 @@ var MovieList = function (_React$Component) {
             }).then(function (data) {
                 movies.push(data);
 
-                _this4.updateState({
+                _this5.updateState({
                     movies: movies
                 });
             });
@@ -101,7 +130,7 @@ var MovieList = function (_React$Component) {
     }, {
         key: 'editMovie',
         value: function editMovie(movie) {
-            var _this5 = this;
+            var _this6 = this;
 
             this.state.editing.add(movie._id);
             this.setState(this.state);
@@ -125,9 +154,9 @@ var MovieList = function (_React$Component) {
                 return response.json();
             }).then(function (data) {
                 movies[index] = data;
-                _this5.state.editing.delete(data._id);
+                _this6.state.editing.delete(data._id);
 
-                _this5.updateState({
+                _this6.updateState({
                     movies: movies
                 });
             });
@@ -135,7 +164,7 @@ var MovieList = function (_React$Component) {
     }, {
         key: 'deleteMovie',
         value: function deleteMovie(id) {
-            var _this6 = this;
+            var _this7 = this;
 
             this.state.deleting.add(id);
             this.setState(this.state);
@@ -155,8 +184,8 @@ var MovieList = function (_React$Component) {
                 if (response.status == 204) {
 
                     movies.splice(index, 1);
-                    _this6.state.deleting.delete(id);
-                    _this6.updateState({
+                    _this7.state.deleting.delete(id);
+                    _this7.updateState({
                         movies: movies
                     });
                 }
@@ -165,27 +194,68 @@ var MovieList = function (_React$Component) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this.fetchNextPage();
+            this.fetchNextPage(this.requestNum);
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this7 = this;
+            var _this8 = this;
 
             return React.createElement(
                 'div',
                 null,
+                React.createElement(
+                    'div',
+                    { className: 'input-group my-2' },
+                    React.createElement(
+                        'div',
+                        { className: 'input-group-prepend' },
+                        React.createElement(
+                            'span',
+                            { className: 'input-group-text border-0', id: 'icon-search' },
+                            React.createElement(
+                                'svg',
+                                { xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', fill: 'currentColor', className: 'bi bi-search', viewBox: '0 0 16 16' },
+                                React.createElement('path', { d: 'M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z' })
+                            )
+                        )
+                    ),
+                    React.createElement('input', { type: 'text',
+                        className: 'form-control border-0',
+                        placeholder: 'Search',
+                        'aria-label': 'Search',
+                        'aria-describedby': 'icon-search',
+                        value: this.state.search,
+                        onChange: this.searchMovies }),
+                    React.createElement(
+                        'div',
+                        { className: 'input-group-append', id: 'button-addon4' },
+                        React.createElement(
+                            'button',
+                            { className: 'btn btn-light', onClick: this.cleanSearch, type: 'button' },
+                            React.createElement(
+                                'svg',
+                                { xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', fill: 'currentColor', className: 'bi bi-x-lg', viewBox: '0 0 16 16' },
+                                React.createElement('path', { d: 'M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z' })
+                            )
+                        )
+                    )
+                ),
                 React.createElement(ModalMovie, { type: 'Add', action: this.addMovie }),
-                this.state.movies.map(function (movie) {
+                this.state.movies.length == 0 && !this.state.loading ? React.createElement(
+                    'h5',
+                    { className: 'text-white' },
+                    'No movies match the search.'
+                ) : this.state.movies.map(function (movie) {
                     return React.createElement(
                         'div',
                         { key: 'wrapper' + movie._id },
                         React.createElement(MovieInfo, { key: movie._id,
                             movie: movie,
-                            'delete': _this7.deleteMovie,
-                            deleting: _this7.state.deleting.has(movie._id),
-                            editing: _this7.state.editing.has(movie._id) }),
-                        React.createElement(ModalMovie, { key: 'modal' + movie._id, id: movie._id, type: 'Edit', action: _this7.editMovie, movie: movie })
+                            'delete': _this8.deleteMovie,
+                            deleting: _this8.state.deleting.has(movie._id),
+                            editing: _this8.state.editing.has(movie._id) }),
+                        React.createElement(ModalMovie, { key: 'modal' + movie._id, id: movie._id, type: 'Edit', action: _this8.editMovie, movie: movie })
                     );
                 }),
                 this.state.loading ? React.createElement(Spinner, null) : '',
