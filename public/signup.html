@@ -28,32 +28,38 @@
         
         <form id="sigup-form">
           <div class="form-group">
-            <label for="name-field">Name</label>
+            <label for="name-field">Name *</label>
             <input type="text" class="form-control" id="name-field" aria-describedby="emailHelp" placeholder="Enter your name" required>
           </div>
           <div class="form-group">
-            <label for="last-name-field">Last name</label>
+            <label for="last-name-field">Last name *</label>
             <input type="text" class="form-control" id="last-name-field" aria-describedby="emailHelp" placeholder="Enter your last name" required>
           </div>
           <div class="form-group">
-            <label for="email-field">Email address</label>
+            <label for="email-field">Email address *</label>
             <input type="email" class="form-control" id="email-field" aria-describedby="emailHelp" placeholder="Enter email" required>
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
           </div>
           <div class="form-group">
-            <label for="password-field">Password</label>
+            <label for="password-field">Password *</label>
             <input type="password" class="form-control" id="password-field" placeholder="Password" required pattern="(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}">
+            <small id="password-legend" class="form-text text-danger d-none">Invalid password</small>
           </div>
           <div class="form-group">
-            <label for="re-password-field">Confirm password</label>
+            <label for="re-password-field">Confirm password *</label>
             <input type="password" class="form-control" id="re-password-field" placeholder="Password" required pattern="(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}">
+            <small id="re-password-legend" class="form-text text-danger d-none">Passwords dont match.</small>
           </div>
           <div class="form-group">
-            <label for="birthday-field">Enter your birthday</label>
+            <label for="birthday-field">Enter your birthday *</label>
             <input type="date" class="form-control" id="birthday-field" placeholder="Password" required>
           </div>
+          <small class="form-text text-info">* required.</small>
           <br>
-          <button id="signup-button" type="button" class="btn btn-danger btn-block">Sign Up</button>
+          <div id="error-alert" class="alert alert-danger d-none" role="alert">
+            Error creating the user, try again.
+          </div>
+          <button id="signup-button" type="button" class="btn btn-danger btn-block" disabled>Sign Up</button>
           <div class="d-none justify-content-center" id="loading-wheel">
             <div class="spinner-border text-danger" role="status">
               <span class="sr-only">Loading...</span>
