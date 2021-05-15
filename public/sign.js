@@ -30,6 +30,7 @@ const loadingWheel = document.getElementById("loading-wheel");
 
 let validpass = false;
 let coincide = false;
+let valid = false;
 
 if(window.location.pathname === "/signin"){
 	const signInbutton = document.getElementById("signin-button");
@@ -50,6 +51,23 @@ if(window.location.pathname === "/signin"){
 	const signUpButton = document.getElementById("signup-button");
 	const rePassLegend = document.getElementById("re-password-legend");
 	const validPassLegend = document.getElementById("password-legend");
+	const form = document.getElementById("sigup-form");
+
+	form.addEventListener("change", (e)=>{
+		let userDate = new Date(birthF.value).getTime();
+		let sysDate = new Date().getTime();
+		valid = form.querySelectorAll(":invalid").length == 0 && (userDate<=sysDate);
+		
+		console.log((userDate<=sysDate));
+		console.log(form.querySelectorAll(":invalid").length == 0);
+		console.log(valid);
+		
+		if(!valid){
+			$("#signup-button").prop("disabled", true);
+			return;
+		}
+		$("#signup-button").prop("disabled", false);
+	});
 
 	$("#password-field").popover({
 		placement: "right",
@@ -80,16 +98,16 @@ if(window.location.pathname === "/signin"){
 		if(validpass){
 			validPassLegend.classList.add("d-none")
 			$("#password-field").popover("hide");
-			if(coincide){
+			if(coincide && valid){
 				$("#signup-button").prop("disabled", false);
 				rePassLegend.classList.add("d-none");
 			}else{
 				$("#signup-button").prop("disabled", true);
 				rePassLegend.classList.remove("d-none");
 			}
-		}else{
-			validPassLegend.classList.remove("d-none")
+			return;
 		}
+		validPassLegend.classList.remove("d-none")
 	})
 	
 	rePassF.addEventListener("keyup", (e)=>{
@@ -99,17 +117,17 @@ if(window.location.pathname === "/signin"){
 
 		if(conincide){
 			rePassLegend.classList.add("d-none");
-			if(validpass){
+			if(validpass && valid){
 				$("#signup-button").prop("disabled", false);
 			}else{
 				$("#signup-button").prop("disabled", true);
 			}
+			return;
 		}
-		else{
-			rePassLegend.classList.remove("d-none");
-		}
-	})
+		rePassLegend.classList.remove("d-none");
+	});
 	signUpButton.addEventListener("click", async (e) => {
+		$("#error-alert").addClass("d-none");
 		showWheel(loadingWheel, signUpButton, true);
 		let name = nameF.value;
 		let lastName = lastNameF.value;
@@ -118,29 +136,6 @@ if(window.location.pathname === "/signin"){
 		let rePass = rePassF.value;
 		let birth = birthF.value;
 	
-		console.log(name);
-		console.log(lastName);
-		console.log(pass);
-		console.log(email);
-		console.log(rePass);
-		console.log(birth);
-	
-		if(name === ""){
-			alert("Name can't be empty");
-			return;
-		}
-		if(lastName === ""){
-			alert("Last name can't be empty");
-			return;
-		}
-		if(!validateEmail(email)){
-			alert("Write a correct email");
-			return;
-		}
-		if(birth === ""){
-			alert("Date invalid");
-			return;
-		}
 		let user = {
 			name:name,
 			last_name:lastName,
@@ -149,18 +144,17 @@ if(window.location.pathname === "/signin"){
 			confirm_password:rePass,
 			birthday:birth
 		}
-		console.log(user);
 		let response = await signUp(user);
-	
+		
 		if(response.name === ""){
-			alert("Error creating the user, try again");
+			$("#error-alert").removeClass("d-none");
 		}else {
 			let response = await signIn(email, pass);
 			sessionStorage.setItem("token", response.token);
 		}
 		showWheel(loadingWheel, signUpButton, false);
 		checkToken();
-	})
+	});
 }
 
 async function signIn(email, password) {
