@@ -17,7 +17,7 @@ app.put('/:id', middleware.validateMovie);
 
 //endpoints
 app.get('/', async (req, res) => {
-    res.send(await dh.getMovies(req.query.detail));
+    res.send(await dh.getMovies(req.query.detail, req.query.page, req.query.query));
 });
 
 app.post('/', async (req, res) => {
