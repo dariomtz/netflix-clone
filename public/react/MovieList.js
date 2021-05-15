@@ -19,7 +19,8 @@ var MovieList = function (_React$Component) {
         _this.state = {
             loading: true,
             editing: new Set(),
-            deleting: new Set()
+            deleting: new Set(),
+            next_page: 0
         };
 
         _this.addMovie = _this.addMovie.bind(_this);
@@ -144,9 +145,10 @@ var MovieList = function (_React$Component) {
         value: function componentDidMount() {
             var _this5 = this;
 
-            this.fetchMovies().then(function (movies) {
+            this.fetchMovies().then(function (response) {
                 _this5.updateState({
-                    movies: movies,
+                    movies: response.movies,
+                    next_page: response.next_page,
                     loading: false
                 });
             });

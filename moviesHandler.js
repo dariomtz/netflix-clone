@@ -43,8 +43,9 @@ function moviesHandler(){
         if(!page){
             nextPage = null;
         }else{
-            nextPage = (page*10)+10 < movies.length ? page+1:page;
-            movies = movies.splice(page*10, (page*10)+10);
+            page = parseInt(page);
+            nextPage = (page*10)+10 < movies.length ? page+1:null;
+            movies = movies.splice(page*10, 10);
         }
         if (detail){
             return {
@@ -80,7 +81,6 @@ function moviesHandler(){
     }
 
     this.putMovie = async (id, movie) => {
-        let oldMovie = await this.getMovie(id);
         let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
         await client.connect();
         await client.db('netflix-clone').collection('movies').updateOne(

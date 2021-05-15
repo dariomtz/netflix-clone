@@ -6,13 +6,25 @@ class MoviesApp extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            loading: true,
+            movies: [],
+            next_page: 0,
+            loadingMore: false,
         };
+
+        this.fetchNextPage = this.fetchNextPage.bind(this);
+        this.fetchMovies = this.fetchMovies.bind(this);
+    }
+    
+    updateState(newState){
+        const state = Object.assign({}, this.state);
+        Object.assign(state, newState);
+        this.setState(state);
     }
 
     fetchMovies(){
+        console.log(this.state.next_page);
         return new Promise((resolve) => {
-            fetch('/api/movies', {
+            fetch(`/api/movies?page=${this.state.next_page}`, {
                 headers: {
                     'api-key': sessionStorage.getItem('key'),
                     'auth-token': sessionStorage.getItem('token'),
@@ -23,15 +35,23 @@ class MoviesApp extends React.Component{
         });
     }
 
-    componentDidMount(){
+    fetchNextPage(){
+        this.updateState({
+            loadingMore: true,
+        });
+
         this.fetchMovies()
         .then(data => {
-            console.log(data);
-            this.setState({
-                loading: false,
-                movies: data,
-            });
+            this.updateState({
+                movies: this.state.movies.concat(data.movies),
+                next_page: data.next_page,
+                loadingMore: false,
+            })
         })
+    }
+
+    componentDidMount(){
+        this.fetchNextPage();
     }
 
     render(){
@@ -39,9 +59,23 @@ class MoviesApp extends React.Component{
             <div className="container text-white pb-5">
                 <h1>Movies</h1>
                 <hr/>
-                { this.state.loading ? 
-                <Spinner/>
-                : this.state.movies.map(movie => <MovieThumbnail key={movie._id} movie={movie} />) }
+
+                { this.state.movies.map(movie => <MovieThumbnail key={movie._id} movie={movie} />) }
+
+                { this.state.loadingMore ? <Spinner/> : ''}
+
+                {
+                    this.state.next_page !== null ?
+                    <div className="container-fluid pt-5">
+                        <button className="btn btn-light" 
+                                disabled={this.state.loadingMore ? true : false}
+                                onClick={ this.fetchNextPage }>
+                            Load more
+                        </button>
+                    </div>
+                    : ''
+                }
+                
             </div>
         );
     }

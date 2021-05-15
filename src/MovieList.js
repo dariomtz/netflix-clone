@@ -7,6 +7,7 @@ class MovieList extends React.Component {
             loading: true,
             editing: new Set(),
             deleting: new Set(),
+            next_page: 0,
         };        
 
         this.addMovie = this.addMovie.bind(this);
@@ -110,9 +111,10 @@ class MovieList extends React.Component {
     }
 
     componentDidMount(){
-        this.fetchMovies().then(movies => {
+        this.fetchMovies().then(response => {
             this.updateState({
-                movies: movies,
+                movies: response.movies,
+                next_page: response.next_page,
                 loading: false,
             });
         });   
