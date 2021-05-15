@@ -17,7 +17,9 @@ var MovieList = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (MovieList.__proto__ || Object.getPrototypeOf(MovieList)).call(this, props));
 
         _this.state = {
-            loading: true
+            loading: true,
+            editing: new Set(),
+            deleting: new Set()
         };
 
         _this.addMovie = _this.addMovie.bind(_this);
@@ -27,6 +29,13 @@ var MovieList = function (_React$Component) {
     }
 
     _createClass(MovieList, [{
+        key: 'updateState',
+        value: function updateState(newState) {
+            var state = Object.assign({}, this.state);
+            Object.assign(state, newState);
+            this.setState(state);
+        }
+    }, {
         key: 'fetchMovies',
         value: function fetchMovies() {
             return new Promise(function (resolve) {
@@ -61,7 +70,7 @@ var MovieList = function (_React$Component) {
             }).then(function (data) {
                 movies.push(data);
 
-                _this2.setState({
+                _this2.updateState({
                     movies: movies
                 });
             });
@@ -71,12 +80,16 @@ var MovieList = function (_React$Component) {
         value: function editMovie(movie) {
             var _this3 = this;
 
+            this.state.editing.add(movie._id);
+            this.setState(this.state);
+
             var movies = this.state.movies;
             var id = movie._id;
             delete movie._id;
             var index = movies.findIndex(function (m) {
                 return id == m._id;
             });
+
             fetch('/api/movies/' + id, {
                 method: 'PUT',
                 headers: {
@@ -89,8 +102,9 @@ var MovieList = function (_React$Component) {
                 return response.json();
             }).then(function (data) {
                 movies[index] = data;
+                _this3.state.editing.delete(data._id);
 
-                _this3.setState({
+                _this3.updateState({
                     movies: movies
                 });
             });
@@ -99,6 +113,9 @@ var MovieList = function (_React$Component) {
         key: 'deleteMovie',
         value: function deleteMovie(id) {
             var _this4 = this;
+
+            this.state.deleting.add(id);
+            this.setState(this.state);
 
             var movies = this.state.movies;
             var index = movies.findIndex(function (movie) {
@@ -115,7 +132,8 @@ var MovieList = function (_React$Component) {
                 if (response.status == 204) {
 
                     movies.splice(index, 1);
-                    _this4.setState({
+                    _this4.state.deleting.delete(id);
+                    _this4.updateState({
                         movies: movies
                     });
                 }
@@ -127,7 +145,7 @@ var MovieList = function (_React$Component) {
             var _this5 = this;
 
             this.fetchMovies().then(function (movies) {
-                _this5.setState({
+                _this5.updateState({
                     movies: movies,
                     loading: false
                 });
@@ -146,7 +164,11 @@ var MovieList = function (_React$Component) {
                     return React.createElement(
                         'div',
                         { key: 'wrapper' + movie._id },
-                        React.createElement(MovieInfo, { key: movie._id, id: movie._id, movie: movie, 'delete': _this6.deleteMovie }),
+                        React.createElement(MovieInfo, { key: movie._id,
+                            movie: movie,
+                            'delete': _this6.deleteMovie,
+                            deleting: _this6.state.deleting.has(movie._id),
+                            editing: _this6.state.editing.has(movie._id) }),
                         React.createElement(ModalMovie, { key: 'modal' + movie._id, id: movie._id, type: 'Edit', action: _this6.editMovie, movie: movie })
                     );
                 })

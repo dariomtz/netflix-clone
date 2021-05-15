@@ -63,20 +63,20 @@ function moviesHandler(){
 
     this.putMovie = async (id, movie) => {
         let oldMovie = await this.getMovie(id);
-        if(oldMovie){
-            let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
-            await client.connect();
-            await client.db('netflix-clone').collection('movies').updateOne(
-                {_id:ObjectId(id)},
-                { $set:{
-                        title:movie.title,
-                        description:movie.description,
-                        image:movie.image,
-                        trailer:movie.trailer,
-                        thumbnail:movie.thumbnail
-                    }
-                }).then(()=>client.close());
-        }
+        let client = new MongoClient(uri, {useNewUrlParser : true, useUnifiedTopology : true});
+        await client.connect();
+        await client.db('netflix-clone').collection('movies').updateOne(
+            {_id:ObjectId(id)},
+            { $set:{
+                    title:movie.title,
+                    description:movie.description,
+                    image:movie.image,
+                    trailer:movie.trailer,
+                    thumbnail:movie.thumbnail
+                }
+            });
+        client.close();
+        movie._id = id;
         return movie;
     }
 
