@@ -17,8 +17,6 @@ var MovieInfo = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (MovieInfo.__proto__ || Object.getPrototypeOf(MovieInfo)).call(this, props));
 
         _this.movie = _this.props.movie;
-        _this.id = _this.props.id;
-
         _this.delete = _this.delete.bind(_this);
         return _this;
     }
@@ -26,11 +24,37 @@ var MovieInfo = function (_React$Component) {
     _createClass(MovieInfo, [{
         key: "delete",
         value: function _delete() {
-            this.props.delete(this.props.id);
+            this.props.delete(this.movie._id);
         }
     }, {
         key: "render",
         value: function render() {
+            if (this.props.editing) {
+                return React.createElement(
+                    "div",
+                    { className: "p-3 my-1" },
+                    React.createElement(
+                        "p",
+                        null,
+                        "Editing"
+                    ),
+                    React.createElement(Spinner, null)
+                );
+            }
+
+            if (this.props.deleting) {
+                return React.createElement(
+                    "div",
+                    { className: "p-3 my-1" },
+                    React.createElement(
+                        "p",
+                        null,
+                        "Deleting"
+                    ),
+                    React.createElement(Spinner, null)
+                );
+            }
+
             return React.createElement(
                 "div",
                 { className: "rounded-lg bg-light text-dark p-3 my-1" },
@@ -79,12 +103,12 @@ var MovieInfo = function (_React$Component) {
                     null,
                     React.createElement(
                         "button",
-                        { className: "btn btn-warning mr-2", "data-toggle": "modal", "data-target": "#movieEdit" + this.id },
+                        { className: "btn btn-warning mr-2", "data-toggle": "modal", "data-target": "#movieEdit" + this.movie._id },
                         "Edit"
                     ),
                     React.createElement(
                         "button",
-                        { className: "btn btn-danger ", "data-toggle": "modal", "data-target": "#confirmDelete" + this.id },
+                        { className: "btn btn-danger ", "data-toggle": "modal", "data-target": "#confirmDelete" + this.movie._id },
                         "Delete"
                     )
                 ),

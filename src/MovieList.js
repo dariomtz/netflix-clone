@@ -5,11 +5,19 @@ class MovieList extends React.Component {
         super(props);
         this.state = {
             loading: true,
-        };
+            editing: new Set(),
+            deleting: new Set(),
+        };        
 
         this.addMovie = this.addMovie.bind(this);
         this.editMovie = this.editMovie.bind(this);
         this.deleteMovie = this.deleteMovie.bind(this);
+    }
+
+    updateState(newState){
+        const state = Object.assign({}, this.state);
+        Object.assign(state, newState);
+        this.setState(state);
     }
 
     fetchMovies(){
@@ -40,17 +48,21 @@ class MovieList extends React.Component {
         .then(data =>{
             movies.push(data);
 
-            this.setState({
+            this.updateState({
                 movies: movies,
             });
         });
     }
 
     editMovie(movie){
+        this.state.editing.add(movie._id);
+        this.setState(this.state);
+
         const movies = this.state.movies;
         let id = movie._id;
         delete movie._id;
         let index = movies.findIndex(m => id == m._id);
+
         fetch(`/api/movies/${ id }`, {
             method: 'PUT',
             headers: {
@@ -62,15 +74,20 @@ class MovieList extends React.Component {
         })
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             movies[index] = data;
+            this.state.editing.delete(movie._id);
 
-            this.setState({
+            this.updateState({
                 movies: movies,
             });
         });
     }
 
     deleteMovie(id){
+        this.state.deleting.add(movie._id);
+        this.setState(this.state);
+
         const movies = this.state.movies;
         let index = movies.findIndex(movie => id == movie._id);
 
@@ -85,7 +102,8 @@ class MovieList extends React.Component {
             if(response.status == 204){
                 
                 movies.splice(index, 1);
-                this.setState({
+                this.state.deleting.remove(movie._id);
+                this.updateState({
                     movies: movies,
                 });    
             }
@@ -94,7 +112,7 @@ class MovieList extends React.Component {
 
     componentDidMount(){
         this.fetchMovies().then(movies => {
-            this.setState({
+            this.updateState({
                 movies: movies,
                 loading: false,
             });
@@ -102,6 +120,7 @@ class MovieList extends React.Component {
     }
 
     render(){
+        console.log(this.state);
         return (
             <div>
                 <ModalMovie type="Add" action={ this.addMovie }/>
@@ -111,7 +130,11 @@ class MovieList extends React.Component {
                  :
                  this.state.movies.map(movie => 
                     <div key={`wrapper${movie._id}`}>
-                        <MovieInfo key={movie._id} id={movie._id} movie={movie} delete={ this.deleteMovie }/>
+                        <MovieInfo key={movie._id}
+                                    movie={movie}
+                                    delete={ this.deleteMovie } 
+                                    deleting={ this.state.deleting.has(movie._id) } 
+                                    editing={ this.state.editing.has(movie._id) }/>
                         <ModalMovie key={`modal${movie._id}`} id={movie._id} type="Edit" action={ this.editMovie } movie={movie}/>
                     </div>
                 )}

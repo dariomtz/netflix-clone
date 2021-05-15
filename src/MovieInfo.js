@@ -4,16 +4,32 @@ class MovieInfo extends React.Component{
     constructor(props){
         super(props);
         this.movie = this.props.movie;
-        this.id = this.props.id;
-
         this.delete = this.delete.bind(this);
     }
 
     delete(){
-        this.props.delete(this.props.id);
+        this.props.delete(this.movie._id);
     }
 
     render(){
+        if(this.props.editing){
+            return (
+                <div className="p-3 my-1">
+                    <p>Editing</p>
+                    <Spinner />
+                </div>
+            );
+        }
+
+        if(this.props.deleting){
+            return (
+                <div className="p-3 my-1">
+                    <p>Deleting</p>
+                    <Spinner />
+                </div>
+            );
+        }
+
         return (
             <div className="rounded-lg bg-light text-dark p-3 my-1">
                 <h3>{ this.movie.title }</h3>
@@ -37,10 +53,10 @@ class MovieInfo extends React.Component{
                     </a>
                 </p>
                 <p>
-                    <button className="btn btn-warning mr-2" data-toggle="modal" data-target={`#movieEdit${ this.id }`}>
+                    <button className="btn btn-warning mr-2" data-toggle="modal" data-target={`#movieEdit${ this.movie._id }`}>
                         Edit
                     </button>
-                    <button className="btn btn-danger " data-toggle="modal" data-target={`#confirmDelete${ this.id }`}>
+                    <button className="btn btn-danger " data-toggle="modal" data-target={`#confirmDelete${ this.movie._id }`}>
                         Delete
                     </button>
                 </p>
