@@ -69,8 +69,8 @@ if(window.location.pathname === "/signin"){
 		let string = "Password must have at least:<br/>"+
 									`&#8226 1 of !@#$%^&* ${checks.simbol?"✅":"❌"}<br/>`+
 									`&#8226 1 number ${checks.number?"✅":"❌"}<br/>`+
-									`&#8226 1 upper case ${checks.upper?"✅":"❌"}<br/>`+
-									`&#8226 1 lower case ${checks.lower?"✅":"❌"}<br/>`+
+									`&#8226 1 upper case letter${checks.upper?"✅":"❌"}<br/>`+
+									`&#8226 1 lower case letter${checks.lower?"✅":"❌"}<br/>`+
 									`&#8226 6 to 16 characters ${checks.length?"✅":"❌"}<br/>`;
 		$("#password-field").attr("data-content", string);
 		$("#password-field").popover('show');
